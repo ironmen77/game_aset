@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Pola Pikir Berbasis Aset — Program Alumni Pejuang Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --g1:#1a3a2a;--g2:#2d6a4f;--g3:#52b788;--gp:#d8f3dc;
+  --am:#e9c46a;--am2:#f4a261;--co:#e76f51;
+  --red:#c0392b;--blue:#1565c0;--purple:#6a0dad;
+  --txt:#1a1a1a;--muted:#5a5a5a;--wh:#fff;
+  --r:14px;--sh:0 4px 24px rgba(26,58,42,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f2f7f4;color:var(--txt);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 15% 15%,rgba(82,183,136,.12) 0%,transparent 50%),radial-gradient(circle at 85% 80%,rgba(233,196,106,.10) 0%,transparent 50%);pointer-events:none;z-index:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 1.25rem;position:relative;z-index:1}
+
+/* ── SCREENS ── */
+.sc{display:none}.sc.on{display:block}
+
+/* ── HOME ICON BUTTON (per page) ── */
+.home-icon-btn{display:inline-flex;align-items:center;gap:7px;background:var(--wh);border:1.5px solid var(--gp);border-radius:40px;padding:7px 16px 7px 12px;font-size:13px;font-weight:500;color:var(--g1);cursor:pointer;transition:all .2s;box-shadow:var(--sh);text-decoration:none}
+.home-icon-btn:hover{background:var(--gp);border-color:var(--g3);transform:translateY(-1px)}
+.home-icon-btn svg{width:16px;height:16px;flex-shrink:0}
+.home-icon-btn-vs{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:40px;padding:7px 16px 7px 12px;font-size:13px;font-weight:500;color:var(--wh);cursor:pointer;transition:all .2s}
+.home-icon-btn-vs:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5)}
+.home-icon-btn-vs svg{width:16px;height:16px;flex-shrink:0}
+
+/* ── QUIZ HEADER ── */
+.home-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.25rem;text-align:center}
+.badge{display:inline-block;background:var(--g1);color:var(--am);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:40px;margin-bottom:1.5rem}
+.main-title{font-family:'Fraunces',serif;font-size:clamp(2rem,6vw,3.2rem);font-weight:700;color:var(--g1);line-height:1.15;margin-bottom:1rem}
+.main-title em{font-style:italic;color:var(--g2)}
+.main-sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:2rem}
+.legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:2rem;max-width:560px}
+.chip{display:flex;align-items:center;gap:6px;background:var(--wh);border:1.5px solid var(--gp);border-radius:40px;padding:6px 14px;font-size:13px;font-weight:500;color:var(--g1)}
+.chip .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── MODE CARDS ── */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;max-width:780px;width:100%;margin-bottom:14px}
+@media(max-width:600px){.mode-grid{grid-template-columns:1fr}}
+.vs-row{max-width:780px;width:100%;margin-bottom:1.5rem}
+.mode-card{background:var(--wh);border:1.5px solid #e0ede6;border-radius:18px;padding:1.5rem;cursor:pointer;text-align:left;transition:all .2s;position:relative;overflow:hidden}
+.mode-card:hover{border-color:var(--g3);transform:translateY(-3px);box-shadow:0 8px 28px rgba(45,106,79,.15)}
+.mode-card.vs-card{background:var(--g1);border-color:var(--g1);color:var(--wh);display:flex;align-items:center;gap:1.5rem;padding:1.25rem 1.75rem}
+.mode-card.vs-card:hover{background:#0f2a1e;border-color:var(--am)}
+.vs-card-left{flex-shrink:0}
+.vs-card-right{flex:1}
+.mode-icon{font-size:32px;margin-bottom:10px;display:block}
+.mode-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;margin-bottom:4px}
+.mode-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.mode-card.vs-card .mode-desc{color:rgba(255,255,255,.7)}
+.mode-card.vs-card .mode-title{color:var(--am);font-size:18px}
+.mode-card.vs-card .mode-icon{font-size:42px;margin-bottom:0}
+.level-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:40px;margin-bottom:8px}
+.lv-mod{background:#e8f4fd;color:var(--blue)}
+.lv-hard{background:#fff3e0;color:#e65100}
+.lv-vhard{background:#fce4ec;color:#c2185b}
+.lv-vs{background:var(--am);color:var(--g1)}
+.credit{margin-top:1.5rem;font-size:12px;color:var(--muted);opacity:.7}
+
+/* ── QUIZ HEADER ── */
+.qhdr{padding:1.25rem 0 0}
+.qtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:1rem}
+.qnum{font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap}
+.sbadge{font-size:13px;font-weight:500;padding:4px 14px;border-radius:40px;white-space:nowrap}
+.sbadge.mod{background:var(--g1);color:var(--am)}
+.sbadge.hard{background:#e65100;color:var(--wh)}
+.sbadge.vhard{background:#c2185b;color:var(--wh)}
+
+/* ── RICH PROGRESS BAR ── */
+.prog-wrap{margin-bottom:1.25rem}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.prog-label{font-size:12px;font-weight:500;color:var(--muted)}
+.prog-poin{font-size:12px;font-weight:600;color:var(--g2)}
+.prog-segs{display:flex;gap:3px;height:8px}
+.prog-seg{flex:1;border-radius:4px;background:#e0ede6;transition:background .35s ease, transform .2s ease;position:relative}
+.prog-seg.done-ok{background:var(--g2)}
+.prog-seg.done-ng{background:var(--co)}
+.prog-seg.current{background:var(--g2);opacity:.4;animation:pulse-seg 1s ease-in-out infinite}
+@keyframes pulse-seg{0%,100%{opacity:.4}50%{opacity:.8}}
+.prog-seg.done-ok::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.35) 50%,transparent 100%);border-radius:4px}
+.prog-streak{font-size:11px;color:var(--g2);font-weight:600;margin-top:6px;min-height:16px;transition:all .3s}
+.prog-streak.fire{color:#e65100}
+.level-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:40px;margin-bottom:.75rem}
+.lp-mod{background:#e8f4fd;color:var(--blue)}
+.lp-hard{background:#fff3e0;color:#e65100}
+.lp-vhard{background:#fce4ec;color:#c2185b}
+.type-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:40px;margin-bottom:.75rem;margin-left:6px}
+.tp-pg{background:#e8f4fd;color:var(--blue)}
+.tp-dd{background:#fff8e1;color:#e65100}
+.tp-bn{background:#f3e5f5;color:var(--purple)}
+
+/* ── SKENARIO ── */
+.sken{background:var(--g1);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.sken::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%}
+.sken-loc{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--am);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.sken-txt{font-size:14.5px;color:rgba(255,255,255,.92);line-height:1.7}
+
+/* ── SOAL ── */
+.qcard{background:var(--wh);border-radius:20px;border:1.5px solid #e0ede6;padding:1.5rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
+.qtxt{font-family:'Fraunces',serif;font-size:clamp(1.05rem,2.5vw,1.2rem);font-weight:600;color:var(--g1);line-height:1.5;margin-bottom:1.5rem}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+@media(max-width:480px){.pgrid{grid-template-columns:1fr}}
+.pbtn{background:var(--wh);border:1.5px solid #dde8e3;border-radius:var(--r);padding:14px 16px;cursor:pointer;text-align:left;transition:all .18s;display:flex;align-items:flex-start;gap:10px;font-family:inherit}
+.pbtn:hover:not(:disabled){border-color:var(--g3);background:#f0faf5;transform:translateY(-1px);box-shadow:0 3px 12px rgba(82,183,136,.15)}
+.pbtn:disabled{cursor:default;transform:none}
+.pi{font-size:22px;flex-shrink:0;line-height:1}
+.pb{flex:1;min-width:0}
+.pn{font-size:13.5px;font-weight:500;color:var(--txt);display:block}
+.pd{font-size:11.5px;color:var(--muted);display:block;margin-top:2px;line-height:1.4}
+.pbtn.ok{background:#eaf7ee;border-color:var(--g2);box-shadow:0 0 0 3px rgba(45,106,79,.12)}
+.pbtn.ok .pn{color:var(--g1)}
+.pbtn.ng{background:#fdf0ee;border-color:var(--co);box-shadow:0 0 0 3px rgba(231,111,81,.12)}
+.pbtn.ng .pn{color:#a03020}
+.pbtn.hi{background:#eaf7ee;border-color:var(--g2);animation:pg 0.5s ease}
+@keyframes pg{0%{box-shadow:0 0 0 0 rgba(45,106,79,.4)}100%{box-shadow:0 0 0 8px rgba(45,106,79,0)}}
+
+/* ── BENAR/SALAH SOAL (hard) ── */
+.yn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.yn-btn{background:var(--wh);border:1.5px solid #dde8e3;border-radius:var(--r);padding:1.5rem;cursor:pointer;text-align:center;font-family:inherit;transition:all .18s;font-size:15px;font-weight:500}
+.yn-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.yn-btn.y:hover:not(:disabled){border-color:var(--g3);background:#f0faf5}
+.yn-btn.n:hover:not(:disabled){border-color:var(--co);background:#fdf0ee}
+.yn-btn.ok{background:#eaf7ee;border-color:var(--g2)}
+.yn-btn.ng{background:#fdf0ee;border-color:var(--co)}
+
+/* ── DRAG DROP ── */
+.pool-lbl{font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;padding:1rem;background:var(--wh);border:1.5px dashed #b8d4c4;border-radius:var(--r);min-height:80px;margin-bottom:1rem;transition:all .2s}
+.pool.dov{background:#f0faf5;border-color:var(--g3)}
+.ditem{display:flex;align-items:center;gap:6px;background:var(--wh);border:1.5px solid #dde8e3;border-radius:40px;padding:7px 14px;font-size:13px;font-weight:500;cursor:grab;user-select:none;transition:all .15s;color:var(--txt);box-shadow:0 2px 6px rgba(0,0,0,.06);touch-action:none}
+.ditem:hover{border-color:var(--g3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(82,183,136,.2)}
+.ditem.dragging{opacity:.4;transform:scale(.95)}
+.ditem.ok{border-color:var(--g2);background:#f0faf5}
+.ditem.ng{border-color:var(--co);background:#fdf0ee}
+.dzones{display:grid;gap:10px}
+.dzone{background:var(--wh);border:1.5px solid #dde8e3;border-radius:var(--r);padding:12px;min-height:90px;transition:all .2s}
+.dzone.dov{background:#f5fbf7;border-color:var(--g3);box-shadow:0 0 0 3px rgba(82,183,136,.15)}
+.dzone-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1.5px solid #eef4f1}
+.dzone-ic{font-size:18px}
+.dzone-nm{font-size:13px;font-weight:500;color:var(--g1)}
+.dzone-items{display:flex;flex-wrap:wrap;gap:6px;min-height:36px}
+.dzone.ok-z{border-color:var(--g2);background:#eaf7ee}
+.dzone.ng-z{border-color:var(--co);background:#fdf0ee}
+.btn-sub{width:100%;padding:14px;background:var(--g2);color:var(--wh);border:none;border-radius:var(--r);font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:1rem}
+.btn-sub:hover{background:var(--g1);transform:translateY(-1px)}
+.btn-sub:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ── FEEDBACK ── */
+.fb{border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;display:none;animation:su .3s ease}
+@keyframes su{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fb.ok{background:#eaf7ee;border:1.5px solid #a8d5b5}
+.fb.ng{background:#fdf0ee;border:1.5px solid #f5b8a8}
+.fb.show{display:block}
+.fb-em{font-size:24px;margin-bottom:6px}
+.fb-ttl{font-size:15px;font-weight:500;margin-bottom:4px}
+.fb.ok .fb-ttl{color:var(--g1)}
+.fb.ng .fb-ttl{color:#a03020}
+.fb-txt{font-size:13.5px;line-height:1.7;color:var(--muted)}
+.btn-nxt{width:100%;padding:14px;background:transparent;color:var(--g1);border:1.5px solid var(--g2);border-radius:var(--r);font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:2rem;display:none}
+.btn-nxt:hover{background:var(--g1);color:var(--wh)}
+.btn-nxt.show{display:block}
+
+/* ── HASIL ── */
+.hasil-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.25rem;text-align:center}
+.h-trophy{font-size:64px;margin-bottom:1rem;animation:bou 1s ease}
+@keyframes bou{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px)}60%{transform:translateY(-10px)}}
+.h-score{font-family:'Fraunces',serif;font-size:clamp(3rem,10vw,5rem);font-weight:700;color:var(--g1);line-height:1;margin-bottom:4px}
+.h-pct{font-size:16px;color:var(--muted);margin-bottom:1.5rem}
+.h-msg{background:var(--wh);border:1.5px solid var(--gp);border-radius:var(--r);padding:1.25rem 1.5rem;font-size:15px;line-height:1.7;color:var(--txt);max-width:540px;margin-bottom:1.5rem;text-align:left}
+.h-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:1.5rem;max-width:400px}
+.hdot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.hdot.ok{background:#eaf7ee;color:var(--g1);border:1.5px solid #a8d5b5}
+.hdot.ng{background:#fdf0ee;color:#a03020;border:1.5px solid #f5b8a8}
+.h-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn-ulang,.btn-home2{padding:14px 28px;border-radius:var(--r);font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:var(--sh)}
+.btn-ulang{background:var(--g1);color:var(--wh);border:none}
+.btn-ulang:hover{background:var(--g2);transform:translateY(-2px)}
+.btn-home2{background:var(--wh);color:var(--g1);border:1.5px solid var(--g2)}
+.btn-home2:hover{background:var(--gp)}
+
+/* ══════════════════════════════════
+   VERSUS MODE
+══════════════════════════════════ */
+#sc-vs{background:var(--g1);min-height:100vh;color:var(--wh);flex-direction:column}
+#sc-vs.on{display:flex}
+.vs-bg{flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* VS SETUP */
+.vs-setup{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center}
+.vs-logo{font-size:56px;margin-bottom:.5rem}
+.vs-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;color:var(--am);line-height:1.1;margin-bottom:.5rem}
+.vs-sub{font-size:14px;color:var(--wh);margin-bottom:2rem}
+.vs-names{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;max-width:500px;width:100%;margin-bottom:2rem}
+.vs-name-inp{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);border-radius:var(--r);padding:12px 16px;font-size:15px;font-weight:500;color:var(--wh);font-family:inherit;text-align:center;width:100%;transition:all .2s}
+.vs-name-inp::placeholder{color:rgba(255,255,255,.5)}
+.vs-name-inp:focus{outline:none;border-color:var(--am);background:rgba(255,255,255,.18)}
+.vs-vs-badge{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--am);white-space:nowrap}
+.btn-vs-start{background:var(--am);color:var(--g1);border:none;border-radius:var(--r);padding:16px 40px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(233,196,106,.3)}
+.btn-vs-start:hover{background:#f0d060;transform:translateY(-2px);box-shadow:0 8px 28px rgba(233,196,106,.4)}
+.vs-rounds-lbl{font-size:13px;color:var(--wh);margin-bottom:.75rem}
+.vs-rounds{display:flex;gap:8px;justify-content:center;margin-bottom:1.5rem}
+.vs-r-btn{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);border-radius:40px;padding:7px 18px;font-size:13px;font-weight:500;color:var(--wh);cursor:pointer;transition:all .2s;font-family:inherit}
+.vs-r-btn.sel{background:var(--am);border-color:var(--am);color:var(--g1);font-weight:700}
+
+/* VS SCOREBOARD */
+.vs-scores{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:1rem 1.5rem;gap:1rem;background:rgba(0,0,0,.3);position:relative;z-index:2}
+.vs-player{text-align:center}
+.vs-p-name{font-size:12px;font-weight:600;color:var(--wh);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vs-p-score{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;line-height:1}
+.vs-p1 .vs-p-score{color:var(--am)}
+.vs-p2 .vs-p-score{color:#74c69d}
+.vs-center-info{text-align:center}
+.vs-round-lbl{font-size:10px;color:rgba(255,255,255,.8);letter-spacing:1px;text-transform:uppercase}
+.vs-round-num{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--wh)}
+
+/* VS SPLIT GAME AREA */
+.vs-split{display:grid;grid-template-columns:1fr 4px 1fr;flex:1;min-height:0}
+.vs-divider{background:rgba(255,255,255,.15);position:relative}
+.vs-divider::after{content:'⚔️';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;background:var(--g1);padding:8px;border-radius:50%;border:2px solid rgba(255,255,255,.2)}
+
+.vs-half{display:flex;flex-direction:column;padding:1rem;overflow-y:auto}
+.vs-half-p1{background:rgba(233,196,106,.06);border-right:none}
+.vs-half-p2{background:rgba(116,198,157,.06)}
+
+/* Question area - center top above split */
+.vs-q-center{padding:1rem 1.5rem .75rem;background:rgba(0,0,0,.2);border-bottom:1px solid rgba(255,255,255,.08)}
+.vs-sken-loc{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--am);margin-bottom:4px}
+.vs-sken-txt{font-size:13px;color:var(--wh);line-height:1.55;margin-bottom:.6rem}
+.vs-qtxt{font-family:'Fraunces',serif;font-size:clamp(.95rem,2vw,1.1rem);font-weight:600;color:var(--wh);line-height:1.4;margin:0}
+
+/* Timer bar */
+.vs-timer-wrap{display:flex;align-items:center;gap:8px;padding:.6rem 1.5rem;background:rgba(0,0,0,.15);border-bottom:1px solid rgba(255,255,255,.06)}
+.vs-timer-bar{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden}
+.vs-timer-fill{height:100%;border-radius:10px;transition:width .9s linear;background:var(--am)}
+.vs-timer-fill.warn{background:var(--co)}
+.vs-timer-num{font-size:15px;font-weight:700;color:var(--wh);min-width:28px;text-align:right;font-family:'Fraunces',serif}
+
+/* Player label in half */
+.vs-half-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.75rem;padding:.5rem .75rem;border-radius:8px;text-align:center}
+.vs-half-p1 .vs-half-label{background:rgba(233,196,106,.18);color:var(--am);border:1px solid rgba(233,196,106,.3)}
+.vs-half-p2 .vs-half-label{background:rgba(116,198,157,.18);color:#a8f0cc;border:1px solid rgba(116,198,157,.3)}
+
+/* Answer buttons in split view - vertical list */
+.vs-ans-list{display:flex;flex-direction:column;gap:7px;flex:1}
+.vs-abtn{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:8px;font-family:inherit;width:100%}
+.vs-abtn:hover:not(:disabled){background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);transform:translateX(2px)}
+.vs-abtn:active:not(:disabled){transform:scale(.97)}
+.vs-abtn:disabled{cursor:default;opacity:.7}
+.vs-abtn .ai{font-size:18px;flex-shrink:0}
+.vs-abtn .an{font-size:12.5px;font-weight:600;color:var(--wh);display:block}
+.vs-abtn .ad{font-size:10.5px;color:rgba(255,255,255,.7);display:block;margin-top:1px}
+.vs-abtn.ok{background:rgba(82,183,136,.3);border-color:#74c69d;animation:correct .4s ease}
+.vs-abtn.ok .an{color:#a8f0cc}
+.vs-abtn.ng{background:rgba(231,111,81,.3);border-color:var(--co)}
+.vs-abtn.ng .an{color:#ffb3a0}
+.vs-abtn.hi{background:rgba(82,183,136,.2);border-color:#74c69d}
+.vs-abtn.hi .an{color:#a8f0cc}
+.vs-abtn.locked{opacity:.4;pointer-events:none}
+@keyframes correct{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+/* Feedback overlay per-half */
+.vs-half-fb{display:none;border-radius:10px;padding:.75rem;text-align:center;margin-top:.75rem;font-size:13px;font-weight:600}
+.vs-half-fb.show{display:block;animation:su .25s ease}
+.vs-half-fb.ok{background:rgba(82,183,136,.25);border:1.5px solid #74c69d;color:#a8f0cc}
+.vs-half-fb.ng{background:rgba(231,111,81,.25);border:1.5px solid var(--co);color:#ffb3a0}
+.vs-half-fb.wait{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6)}
+
+/* Next button - center */
+.vs-nxt-bar{padding:.75rem 1.5rem;background:rgba(0,0,0,.25);display:none;justify-content:center;border-top:1px solid rgba(255,255,255,.08)}
+.vs-nxt-bar.show{display:flex}
+.btn-vs-nxt{padding:12px 40px;background:var(--am);color:var(--g1);border:none;border-radius:var(--r);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-vs-nxt:hover{background:#f0d060;transform:translateY(-1px)}
+
+/* Timeout overlay */
+.vs-timeout-bar{padding:.6rem;background:rgba(231,111,81,.2);border-top:1px solid rgba(231,111,81,.3);text-align:center;font-size:13px;font-weight:600;color:#ffb3a0;display:none}
+.vs-timeout-bar.show{display:block}
+
+/* VS FEEDBACK (legacy, keep for timeout) */
+.vs-fb{padding:1rem;border-radius:var(--r);margin-bottom:1rem;text-align:center;animation:su .3s ease}
+.vs-fb.ok{background:rgba(82,183,136,.2);border:1.5px solid rgba(116,198,157,.5)}
+.vs-fb.ng{background:rgba(231,111,81,.2);border:1.5px solid rgba(231,111,81,.5)}
+.vs-fb-ttl{font-size:16px;font-weight:600;margin-bottom:3px}
+.vs-fb.ok .vs-fb-ttl{color:#a8f0cc}
+.vs-fb.ng .vs-fb-ttl{color:#ffb3a0}
+.vs-fb-txt{font-size:13px;color:var(--wh);line-height:1.6}
+.vs-fb-txt strong{color:var(--wh)}
+
+/* VS FINAL */
+.vs-final{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;text-align:center}
+.vs-winner-badge{font-size:64px;margin-bottom:.5rem;animation:bou 1s ease}
+.vs-winner-name{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--am);margin-bottom:.25rem}
+.vs-winner-sub{font-size:15px;color:var(--wh);margin-bottom:1.5rem}
+.vs-final-scores{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:360px;width:100%;margin-bottom:2rem}
+.vs-fs-card{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);border-radius:var(--r);padding:1.25rem;text-align:center}
+.vs-fs-card.winner{border-color:var(--am);background:rgba(233,196,106,.15)}
+.vs-fs-name{font-size:12px;color:var(--wh);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.vs-fs-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:700;color:var(--am)}
+.vs-fs-card:not(.winner) .vs-fs-num{color:var(--wh)}
+.vs-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn-vs-again{background:var(--am);color:var(--g1);border:none;border-radius:var(--r);padding:14px 28px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-vs-again:hover{background:#f0d060;transform:translateY(-2px)}
+.btn-vs-home{background:rgba(255,255,255,.12);color:var(--wh);border:1.5px solid rgba(255,255,255,.35);border-radius:var(--r);padding:14px 28px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-vs-home:hover{background:rgba(255,255,255,.22)}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div id="sc-home" class="sc on">
+<div class="home-wrap wrap">
+  <div class="badge">Program Alumni Pejuang Digital · LPDP 2026</div>
+  <h1 class="main-title">Pola Pikir<br><em>Berbasis Aset</em><br>di Sekolah</h1>
+  <p class="main-sub">Kuis interaktif 7 jenis aset sekolah dalam konteks daerah Terdepan, Terluar, dan Tertinggal (3T). Pilih level atau mainkan bersama teman!</p>
+  <div class="legend">
+    <div class="chip"><span class="dot" style="background:#2d6a4f"></span>Manusia</div>
+    <div class="chip"><span class="dot" style="background:#52b788"></span>Sosial</div>
+    <div class="chip"><span class="dot" style="background:#e9c46a"></span>Fisik</div>
+    <div class="chip"><span class="dot" style="background:#f4a261"></span>Institusional</div>
+    <div class="chip"><span class="dot" style="background:#e76f51"></span>Ekonomi</div>
+    <div class="chip"><span class="dot" style="background:#4a7c59"></span>Budaya</div>
+    <div class="chip"><span class="dot" style="background:#1565c0"></span>Digital</div>
+  </div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="startQuiz('moderate')">
+      <span class="level-badge lv-mod">⭐ Moderate</span>
+      <span class="mode-icon">🎯</span>
+      <div class="mode-title">Level Moderate</div>
+      <div class="mode-desc">Pilihan ganda & drag drop dasar. Cocok untuk pemanasan. 8 soal konteks 3T yang jelas.</div>
+    </div>
+    <div class="mode-card" onclick="startQuiz('hard')">
+      <span class="level-badge lv-hard">⭐⭐ Hard</span>
+      <span class="mode-icon">🔥</span>
+      <div class="mode-title">Level Hard</div>
+      <div class="mode-desc">Ditambah soal benar/salah & skenario ambigu. 10 soal dengan distractor kuat.</div>
+    </div>
+    <div class="mode-card" onclick="startQuiz('vhard')">
+      <span class="level-badge lv-vhard">⭐⭐⭐ Very Hard</span>
+      <span class="mode-icon">💀</span>
+      <div class="mode-title">Level Very Hard</div>
+      <div class="mode-desc">Semua tipe soal, skenario lintas aset, drag drop 3 zona. 12 soal untuk yang berani!</div>
+    </div>
+  </div>
+  <div class="vs-row">
+    <div class="mode-card vs-card" onclick="showVsSetup()">
+      <div class="vs-card-left">
+        <span class="level-badge lv-vs">⚔️ Versus Mode</span>
+        <span class="mode-icon">🏆</span>
+      </div>
+      <div class="vs-card-right">
+        <div class="mode-title">Versus — Head to Head</div>
+        <div class="mode-desc">2 pemain berlomba di papan interaktif digital. Timer per soal & poin bonus kecepatan. Siapa paling cepat & tepat?</div>
+      </div>
+    </div>
+  </div>
+  <div class="credit">Modul Penguatan Karakter & Soft Skill · Kemendikbud × LPDP</div>
+</div>
+</div>
+
+<!-- ══ QUIZ (SOLO) ══ -->
+<div id="sc-quiz" class="sc">
+<div class="wrap">
+  <div class="qhdr">
+    <div class="qtop">
+      <button class="home-icon-btn" onclick="goHome()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        Beranda
+      </button>
+      <span class="qnum" id="qnum">1 / 8</span>
+      <span class="sbadge mod" id="sbadge">0 poin</span>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-top">
+        <span class="prog-label" id="prog-label">Soal 1 dari 8</span>
+        <span class="prog-poin" id="prog-poin">🎯 0 benar</span>
+      </div>
+      <div class="prog-segs" id="prog-segs"></div>
+      <div class="prog-streak" id="prog-streak"></div>
+    </div>
+  </div>
+  <div id="qcard" class="qcard"></div>
+  <div id="fb-area"></div>
+  <button class="btn-nxt" id="btn-nxt" onclick="nextSoal()">Soal Berikutnya →</button>
+</div>
+</div>
+
+<!-- ══ HASIL ══ -->
+<div id="sc-hasil" class="sc">
+<div class="hasil-wrap wrap">
+  <div class="h-trophy" id="h-trophy">🏆</div>
+  <div class="h-score" id="h-score"></div>
+  <div class="h-pct" id="h-pct"></div>
+  <div class="h-msg" id="h-msg"></div>
+  <div class="h-grid" id="h-grid"></div>
+  <div class="h-btns">
+    <button class="btn-ulang" onclick="ulang()">Ulangi Level Ini 🔄</button>
+    <button class="btn-home2" onclick="goHome()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+      Pilih Level Lain
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- ══ VERSUS ══ -->
+<div id="sc-vs" class="sc">
+<div class="vs-bg" id="vs-bg">
+
+  <!-- SETUP -->
+  <div class="vs-setup" id="vs-setup">
+    <button class="home-icon-btn-vs" onclick="goHome()" style="margin-bottom:1.5rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+      Beranda
+    </button>
+    <div class="vs-logo">⚔️</div>
+    <div class="vs-title">Versus Mode</div>
+    <div class="vs-sub">Dua pemain, satu layar, siapa paling paham aset?</div>
+    <div class="vs-names">
+      <input class="vs-name-inp" id="vn1" placeholder="Nama Pemain 1" maxlength="20">
+      <span class="vs-vs-badge">VS</span>
+      <input class="vs-name-inp" id="vn2" placeholder="Nama Pemain 2" maxlength="20">
+    </div>
+    <div class="vs-rounds-lbl">Jumlah Ronde</div>
+    <div class="vs-rounds" id="vs-rounds">
+      <button class="vs-r-btn sel" onclick="setRounds(5,this)">5</button>
+      <button class="vs-r-btn" onclick="setRounds(8,this)">8</button>
+      <button class="vs-r-btn" onclick="setRounds(10,this)">10</button>
+    </div>
+    <button class="btn-vs-start" onclick="startVs()">Mulai Pertandingan ⚔️</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="vs-game" style="display:none;flex:1;flex-direction:column;min-height:0">
+    <!-- Scoreboard -->
+    <div class="vs-scores">
+      <div class="vs-player vs-p1">
+        <div class="vs-p-name" id="vp1-name">Pemain 1</div>
+        <div class="vs-p-score" id="vp1-score">0</div>
+      </div>
+      <div class="vs-center-info">
+        <button class="home-icon-btn-vs" onclick="goHome()" style="padding:5px 12px 5px 10px;font-size:12px;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          Menu
+        </button>
+        <div class="vs-round-lbl">Ronde</div>
+        <div class="vs-round-num" id="vs-rnum">1/5</div>
+      </div>
+      <div class="vs-player vs-p2">
+        <div class="vs-p-name" id="vp2-name">Pemain 2</div>
+        <div class="vs-p-score" id="vp2-score">0</div>
+      </div>
+    </div>
+    <!-- Question center -->
+    <div class="vs-q-center" id="vs-q-center"></div>
+    <!-- Timer -->
+    <div class="vs-timer-wrap">
+      <div class="vs-timer-bar"><div class="vs-timer-fill" id="vs-tfill" style="width:100%"></div></div>
+      <div class="vs-timer-num" id="vs-tnum">15</div>
+    </div>
+    <!-- Timeout bar -->
+    <div class="vs-timeout-bar" id="vs-timeout-bar"></div>
+    <!-- Split answer area -->
+    <div class="vs-split" id="vs-split">
+      <div class="vs-half vs-half-p1" id="vs-half1"></div>
+      <div class="vs-divider"></div>
+      <div class="vs-half vs-half-p2" id="vs-half2"></div>
+    </div>
+    <!-- Next button bar -->
+    <div class="vs-nxt-bar" id="vs-nxt-bar">
+      <button class="btn-vs-nxt" onclick="vsNext()">Soal Berikutnya →</button>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div id="vs-final" style="display:none;flex:1;flex-direction:column">
+    <div class="vs-final">
+      <div class="vs-winner-badge" id="vf-trophy">🏆</div>
+      <div class="vs-winner-name" id="vf-winner"></div>
+      <div class="vs-winner-sub" id="vf-sub"></div>
+      <div class="vs-final-scores" id="vf-scores"></div>
+      <div class="vs-btns">
+        <button class="btn-vs-again" onclick="vsAgain()">Main Lagi ⚔️</button>
+        <button class="btn-vs-home" onclick="goHome()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          Beranda
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   ASSET DEFINITIONS
+══════════════════════════════════════════════════ */
+const AD = {
+  manusia:       {l:'Manusia',       i:'👩‍🏫', d:'Guru, kepala sekolah, murid, komunitas'},
+  sosial:        {l:'Sosial',        i:'🤝',  d:'Jaringan, kepercayaan, gotong royong'},
+  fisik:         {l:'Fisik',         i:'🏫',  d:'Bangunan, peralatan, lahan sekolah'},
+  institusional: {l:'Institusional', i:'📋',  d:'Lembaga, program, MoU, kebijakan'},
+  ekonomi:       {l:'Ekonomi',       i:'💰',  d:'Dana, sumber daya finansial komunitas'},
+  budaya:        {l:'Budaya',        i:'🎭',  d:'Tradisi, nilai lokal, kearifan daerah'},
+  digital:       {l:'Digital',       i:'💻',  d:'Perangkat, platform, konten & akses digital'},
+};
+
+/* ══════════════════════════════════════════════════
+   SOAL BANK — MODERATE (8 soal)
+══════════════════════════════════════════════════ */
+const MODERATE = [
+  {type:'pilihan',lok:'SDN Lembah Hijau, Papua Pegunungan',
+   ske:'Pak Yohanes adalah guru kelas rangkap yang mengajar kelas 1–3 sekaligus. Ia fasih berbahasa Mee dan mampu menjadi jembatan antara murid dan kurikulum nasional.',
+   soal:'Kemampuan dan dedikasi Pak Yohanes merupakan aset jenis apa?',
+   jwb:'manusia',opsi:['manusia','sosial','institusional','budaya'],
+   pen:'🎯 Tepat! Guru dengan kompetensi multi-kelas dan penguasaan bahasa lokal adalah inti dari <strong>Aset Manusia</strong>. Di sekolah 3T, satu guru seperti Pak Yohanes bisa lebih berharga dari satu set perangkat komputer.',
+   ff:'💡 Fun fact: 40% sekolah di Papua Pegunungan memiliki rasio guru-murid di atas 1:50!'},
+
+  {type:'pilihan',lok:'SDN Tanjung Merah, Maluku Barat Daya',
+   ske:'Setiap Jumat pagi, nelayan-ayah dari para murid bergantian hadir di sekolah untuk bercerita tentang navigasi bintang dan kearifan laut kepada siswa kelas 4–6.',
+   soal:'Keterlibatan sukarela komunitas nelayan ini adalah contoh aset apa?',
+   jwb:'sosial',opsi:['budaya','sosial','manusia','ekonomi'],
+   pen:'🤝 Betul! Jaringan kepercayaan dan partisipasi sukarela komunitas adalah <strong>Aset Sosial</strong>. Modal sosial ini menggerakkan keterlibatan tanpa membutuhkan anggaran sepeserpun.',
+   ff:'💡 Robert Putnam menyebut modal sosial sebagai "perekat masyarakat" — dan sekolah 3T memilikinya secara alami!'},
+
+  {type:'pilihan',lok:'SDN Muara Dua, Kalimantan Utara',
+   ske:'Lahan 200 m² di tepi sungai yang dulunya tempat pembuangan kini dimanfaatkan guru dan murid sebagai kebun sekolah produktif penghasil sayuran.',
+   soal:'Lahan tepi sungai yang dioptimalkan ini termasuk aset apa?',
+   jwb:'fisik',opsi:['budaya','ekonomi','fisik','sosial'],
+   pen:'🏫 Benar! Lahan yang dapat digunakan sekolah — termasuk yang sebelumnya "tidur" — adalah <strong>Aset Fisik</strong>. Kuncinya: kepemilikan atau aksesibilitas nyata terhadap ruang/benda.',
+   ff:'💡 Lahan sekolah yang tidak terpakai adalah aset fisik tersembunyi paling umum di sekolah 3T!'},
+
+  {type:'pilihan',lok:'SDN Batu Panjang, Riau Kepulauan',
+   ske:'Ada MoU resmi antara sekolah dan Puskesmas kecamatan. Setiap bulan, tenaga kesehatan hadir memberi edukasi gizi dan PHBS kepada seluruh siswa.',
+   soal:'Kemitraan formal dengan Puskesmas melalui MoU ini adalah aset apa?',
+   jwb:'institusional',opsi:['manusia','sosial','institusional','fisik'],
+   pen:'📋 Tepat sekali! Kemitraan formal, program resmi, dan jaringan antar-lembaga adalah <strong>Aset Institusional</strong>. MoU memberikan akses ke sumber daya eksternal secara berkelanjutan.',
+   ff:'💡 Banyak sekolah punya potensi MoU tapi belum tahu cara menginisiasinya — ini peluang besar!'},
+
+  {type:'pilihan',lok:'SDN Pedalaman Sintang, Kalimantan Barat',
+   ske:'Komite sekolah berhasil menyisihkan hasil panen karet dan tengkawang warga senilai Rp 3 juta untuk membeli buku bacaan bagi perpustakaan mini sekolah.',
+   soal:'Dana dari hasil panen komunitas yang disisihkan ini adalah contoh aset apa?',
+   jwb:'ekonomi',opsi:['sosial','ekonomi','budaya','institusional'],
+   pen:'💰 Pas! <strong>Aset Ekonomi</strong> tidak harus berupa transfer dari pemerintah. Hasil bumi dan kontribusi finansial komunitas juga sah sebagai sumber daya ekonomi sekolah.',
+   ff:'💡 Dana non-BOS dari komunitas justru lebih fleksibel penggunaannya daripada dana BOS yang terikat regulasi!'},
+
+  {type:'pilihan',lok:'SDN Nggongi, Nusa Tenggara Timur',
+   ske:'Kepala sekolah mengundang tua adat setiap pembukaan semester. Sang sesepuh menyampaikan pesan moral dan nilai-nilai lokal kepada seluruh murid dalam bahasa daerah.',
+   soal:'Tradisi dan nilai yang dibawa tua adat ini merupakan aset apa?',
+   jwb:'budaya',opsi:['manusia','budaya','sosial','ekonomi'],
+   pen:'🎭 Mantap! Kearifan lokal, tradisi, dan nilai-nilai yang hidup dalam komunitas adalah <strong>Aset Budaya</strong>. Di daerah 3T, aset ini justru sering lebih kuat dari sekolah perkotaan.',
+   ff:'💡 NTT memiliki 40+ bahasa daerah. Bahasa lokal sebagai jembatan pembelajaran adalah aktivasi aset budaya yang sangat efektif!'},
+
+  {type:'dragdrop',lok:'SDN Harapan Jaya, Kalimantan Tengah',
+   ske:'Kepala sekolah baru mengidentifikasi berbagai potensi yang dimiliki sekolahnya untuk program literasi pagi.',
+   soal:'Seret setiap potensi ke kategori aset yang tepat!',
+   zones:[{id:'manusia',l:'Aset Manusia',i:'👩‍🏫'},{id:'sosial',l:'Aset Sosial',i:'🤝'}],
+   items:[
+     {id:'i1',t:'📚 Guru yang gemar membaca & menulis cerita anak',z:'manusia'},
+     {id:'i2',t:'🏆 Alumni aktif yang mau jadi relawan mengajar',z:'sosial'},
+     {id:'i3',t:'👨‍💼 Kepala sekolah visioner & berpola pikir aset',z:'manusia'},
+     {id:'i4',t:'👨‍👩‍👧 Orang tua yang solid dalam paguyuban komite',z:'sosial'},
+   ],
+   pen:'✅ Hebat! <strong>Aset Manusia</strong> = individu dengan kompetensi (guru, kepsek). <strong>Aset Sosial</strong> = jaringan relasi dan kepercayaan (alumni, orang tua komunitas). Perbedaan kuncinya: orang vs hubungan antar orang!'},
+
+  {type:'dragdrop',lok:'SDN Perbatasan Entikong, Kalimantan Barat',
+   ske:'Tim pengembang sekolah memetakan aset untuk program digitalisasi pembelajaran.',
+   soal:'Klasifikasikan setiap sumber daya ke jenis aset yang benar!',
+   zones:[{id:'digital',l:'Aset Digital',i:'💻'},{id:'ekonomi',l:'Aset Ekonomi',i:'💰'}],
+   items:[
+     {id:'i1',t:'💻 Platform Rumah Belajar yang diakses gratis oleh seluruh guru',z:'digital'},
+     {id:'i2',t:'📱 Akun resmi sekolah di aplikasi SiPintar Kemendikbud',z:'digital'},
+     {id:'i3',t:'💵 Hasil penjualan kerajinan murid di pasar desa',z:'ekonomi'},
+     {id:'i4',t:'🤝 Kontribusi rutin dari komite sekolah per semester',z:'ekonomi'},
+   ],
+   pen:'✅ Tepat! <strong>Aset Digital</strong> = platform, aplikasi, konten & akses digital yang dapat dimanfaatkan sekolah. <strong>Aset Ekonomi</strong> = sumber daya keuangan. Catatan: platform gratis tetap = aset digital (bukan ekonomi)!'},
+];
+
+/* ══════════════════════════════════════════════════
+   SOAL BANK — HARD (10 soal)
+══════════════════════════════════════════════════ */
+const HARD = [
+  {type:'pilihan',lok:'SDN Rimba Subur, Jambi',
+   ske:'Kepala sekolah menjalin hubungan dengan perusahaan sawit di sekitar desa dan berhasil mendapatkan CSR berupa pengecatan gedung, perbaikan atap, dan bantuan meja kursi.',
+   soal:'Bantuan CSR berupa material dan renovasi ini adalah aset apa?',
+   jwb:'ekonomi',opsi:['institusional','ekonomi','fisik','sosial'],
+   pen:'💰 Tepat! Bantuan CSR dalam bentuk material termasuk <strong>Aset Ekonomi</strong>. Catatan: hasil material yang sudah diterima bisa juga diklasifikasi sebagai aset fisik — ini soal "sebelum" vs "sesudah" diterima. Di sini fokusnya pada sumber daya yang diperoleh.',
+   ff:'💡 UU No. 40/2007 mewajibkan perusahaan menganggarkan minimal 2% laba bersih untuk CSR. Sekolah di sekitar perusahaan berhak mengajukan proposal!'},
+
+  {type:'pilihan',lok:'SDN Kepulauan Aru, Maluku',
+   ske:'Bu Kepala Sekolah dengan 15 tahun pengalaman mendampingi guru SM3T yang baru ditempatkan melalui mentoring mingguan informal.',
+   soal:'Pengalaman dan kepemimpinan Bu Kepsek sebagai mentor adalah aset apa?',
+   jwb:'manusia',opsi:['manusia','institusional','sosial','budaya'],
+   pen:'👩‍🏫 Betul! Pengalaman, kebijaksanaan, dan kemampuan kepemimpinan seseorang adalah <strong>Aset Manusia</strong>. Seorang mentor yang baik adalah investasi terbaik untuk pengembangan kapasitas institusi.',
+   ff:'💡 Di Kepulauan Aru, turnover guru bisa mencapai 60% per tahun. Kepsek berpengalaman yang "bertahan" adalah aset tak ternilai!'},
+
+  {type:'pilihan',lok:'SDN Rimba Asri, Aceh Tengah',
+   ske:'Universitas Syiah Kuala memiliki program KKN tematik khusus sekolah 3T yang setiap semester mengirim 4 mahasiswa mendampingi pembelajaran selama 40 hari.',
+   soal:'Program KKN tematik dari universitas ini termasuk aset apa bagi sekolah?',
+   jwb:'institusional',opsi:['manusia','sosial','institusional','ekonomi'],
+   pen:'📋 Tepat! Meskipun mahasiswa KKN adalah manusia, kemitraan program dengan universitas adalah <strong>Aset Institusional</strong> — sifatnya sistemik, berulang, dan terikat perjanjian antar-lembaga.',
+   ff:'💡 Perbedaan krusial: Mahasiswa KKN individu = aset manusia (sementara). Program KKN yang terlembaga = aset institusional (berkelanjutan)!'},
+
+  {type:'pilihan',lok:'SDN Perbatasan Entikong, Kalimantan Barat',
+   ske:'Sekolah memiliki akses ke jaringan internet berbasis satelit dari program pemerintah, ditambah 8 tablet yang sudah terisi konten offline Rumah Belajar dan buku digital SIBI.',
+   soal:'Tablet berkonten offline dan akses internet satelit ini termasuk aset apa?',
+   jwb:'digital',opsi:['fisik','digital','ekonomi','institusional'],
+   pen:'💻 Tepat! Perangkat yang berfungsi sebagai media digital (konten, platform, konektivitas) termasuk <strong>Aset Digital</strong>. Berbeda dengan aset fisik biasa — nilai utamanya bukan pada benda fisiknya, melainkan pada kapasitas digital yang dikandungnya.',
+   ff:'💡 Tablet kosong = aset fisik. Tablet berisi konten pembelajaran + terkoneksi platform = aset digital. Isinya yang menentukan kategorinya!'},
+
+  {type:'pilihan',lok:'SDN Pantai Karang, NTB',
+   ske:'Guru seni mengajak murid mendokumentasikan 7 jenis anyaman tradisional Sasak yang hampir punah, lalu memajangnya sebagai galeri karya di koridor sekolah.',
+   soal:'Kearifan anyaman Sasak yang dihidupkan kembali ini adalah aset apa?',
+   jwb:'budaya',opsi:['budaya','ekonomi','manusia','fisik'],
+   pen:'🎭 Luar biasa! Pengetahuan tradisional, seni, dan kearifan lokal adalah <strong>Aset Budaya</strong>. Sekolah 3T bisa menjadi penjaga warisan budaya sekaligus media pembelajaran yang kaya.',
+   ff:'💡 UNESCO: 50% warisan budaya tak benda dunia akan hilang dalam 50 tahun. Sekolah 3T punya peran vital!'},
+
+  {type:'pilihan',lok:'SDN Wairinding, Sumba Timur, NTT',
+   ske:'Warga desa membentuk "Komite Jaga Sekolah" yang bergantian menjaga dan merawat fasilitas sekolah di luar jam belajar tanpa imbalan apapun.',
+   soal:'Komite sukarela warga yang merawat sekolah ini adalah contoh aset apa?',
+   jwb:'sosial',opsi:['manusia','budaya','sosial','ekonomi'],
+   pen:'🤝 Tepat! Rasa kepemilikan bersama, gotong royong, dan kepercayaan komunitas terhadap sekolah adalah inti dari <strong>Aset Sosial</strong>. Tanpa modal sosial, tidak ada program yang bisa bertahan jangka panjang.',
+   ff:'💡 Penelitian di NTT: sekolah dengan modal sosial tinggi memiliki angka putus sekolah 3x lebih rendah!'},
+
+  {type:'benar_salah',lok:'SDN Mandiri, Sulawesi Tengah',
+   ske:'Seorang fasilitator APD menyatakan: "Aula serbaguna sekolah yang sudah 5 tahun tidak digunakan bukan lagi aset karena sudah rusak dan tidak berfungsi."',
+   soal:'Apakah pernyataan fasilitator tersebut BENAR?',
+   jwb:'salah',
+   pen:'❌ Pernyataan itu <strong>SALAH</strong>. Aset fisik yang tidak optimal dimanfaatkan tetap merupakan aset yang bisa dipulihkan. Pola pikir berbasis aset justru melihat potensi di balik kondisi yang ada, bukan menghapus aset dari peta.',
+   ff:'💡 Inilah esensi pola pikir berbasis aset: melihat potensi di balik keterbatasan, bukan menyerah pada kondisi saat ini!'},
+
+  {type:'benar_salah',lok:'Refleksi Konsep',
+   ske:'Seorang kepala sekolah berkata: "Gotong royong warga yang selalu hadir setiap kerja bakti sekolah adalah Aset Sosial, bukan Aset Budaya."',
+   soal:'Apakah pernyataan kepala sekolah tersebut BENAR?',
+   jwb:'benar',
+   pen:'✅ Pernyataan itu <strong>BENAR</strong>. Meski gotong royong berakar dari budaya, dalam konteks ini yang menonjol adalah jaringan kepercayaan dan partisipasi aktif komunitas — ciri utama <strong>Aset Sosial</strong>. Gotong royong sebagai nilai abstrak = budaya; sebagai aksi komunitas nyata = sosial.',
+   ff:'💡 Banyak aset berada di "perbatasan" antar kategori — kuncinya: fokus pada fungsi dan dampaknya, bukan hanya asal-usulnya!'},
+
+  {type:'dragdrop',lok:'SDN Mandiri, Sulawesi Tengah',
+   ske:'Fasilitator APD memetakan kekuatan sekolah untuk meningkatkan kualitas pembelajaran.',
+   soal:'Seret potensi-potensi ini ke kategori aset yang tepat!',
+   zones:[{id:'budaya',l:'Aset Budaya',i:'🎭'},{id:'fisik',l:'Aset Fisik',i:'🏫'}],
+   items:[
+     {id:'i1',t:'🏛️ Aula serbaguna peninggalan proyek pemerintah yang jarang dipakai',z:'fisik'},
+     {id:'i2',t:'🥁 Tradisi Padungku panen syukur yang selalu melibatkan anak-anak',z:'budaya'},
+     {id:'i3',t:'📡 Antena TV parabola tua yang bisa dialihfungsikan',z:'fisik'},
+     {id:'i4',t:'🗣️ Bahasa Pamona yang masih digunakan sehari-hari di kelas',z:'budaya'},
+   ],
+   pen:'✅ Excellent! <strong>Aset Budaya</strong> = tradisi, bahasa, nilai komunitas. <strong>Aset Fisik</strong> = bangunan, peralatan, infrastruktur. Aula "nganggur" dan antena tua adalah aset fisik yang sering diabaikan!'},
+
+  {type:'dragdrop',lok:'Refleksi Lintas Sekolah 3T',
+   ske:'Alumni Pejuang Digital membantu 3 kepala sekolah memetakan aset utama mereka dalam satu sesi bersama.',
+   soal:'Klasifikasikan 6 aset dari berbagai sekolah ke tiga kategori!',
+   zones:[{id:'manusia',l:'Aset Manusia',i:'👩‍🏫'},{id:'institusional',l:'Aset Institusional',i:'📋'},{id:'digital',l:'Aset Digital',i:'💻'}],
+   items:[
+     {id:'i1',t:'📺 Konten video pembelajaran offline di kanal YouTube sekolah',z:'digital'},
+     {id:'i2',t:'🤲 Guru agama yang juga hafidz & seniman rebana',z:'manusia'},
+     {id:'i3',t:'🏛️ MoU dengan Dinas Perpustakaan untuk buku mobile',z:'institusional'},
+     {id:'i4',t:'👩‍🔬 Operator sekolah yang mahir data dan administrasi digital',z:'manusia'},
+     {id:'i5',t:'🤝 Perjanjian kerja sama dengan BUMDes untuk magang siswa',z:'institusional'},
+     {id:'i6',t:'📱 Akses ke platform Merdeka Mengajar yang aktif digunakan guru',z:'digital'},
+   ],
+   pen:'✅ Spektakuler! Kunci: <strong>Manusia</strong> = kompetensi individu. <strong>Institusional</strong> = MoU/program antar-lembaga. <strong>Digital</strong> = platform, konten, dan akses digital yang dimanfaatkan sekolah.'},
+
+  {type:'pilihan',lok:'SDN Pantai Biru, Maluku Utara',
+   ske:'Kepala sekolah mendaftarkan semua guru ke akun belajar.id dan mengaktifkan Google Workspace for Education. Kini guru bisa membuat kelas digital, berbagi materi, dan menilai tugas secara online.',
+   soal:'Akun belajar.id dan ekosistem Google Workspace yang aktif digunakan ini adalah aset apa?',
+   jwb:'digital',opsi:['fisik','institusional','digital','manusia'],
+   pen:'💻 Tepat! Akun digital, platform, dan ekosistem teknologi yang aktif dimanfaatkan untuk pembelajaran adalah <strong>Aset Digital</strong>. Bukan fisik (bukan benda) dan bukan institusional (bukan MoU) — ini adalah kapasitas digital nyata yang dimiliki sekolah.',
+   ff:'💡 Program belajar.id Kemendikbud sudah menjangkau 4 juta+ akun guru & murid. Tapi banyak sekolah 3T belum mengaktifkannya — padahal ini aset digital gratis yang siap pakai!'},
+];
+
+/* ══════════════════════════════════════════════════
+   SOAL BANK — VERY HARD (12 soal)
+══════════════════════════════════════════════════ */
+const VHARD = [
+  {type:'pilihan',lok:'SDN Terpencil, Papua Barat Daya',
+   ske:'Seorang tukang kayu warga yang tidak punya ijazah apapun secara sukarela mengajarkan kerajinan perahu kepada murid kelas 5–6 setiap Sabtu pagi. Kepala sekolah melibatkannya secara konsisten.',
+   soal:'Keahlian dan kontribusi tukang kayu warga ini masuk kategori aset apa?',
+   jwb:'manusia',opsi:['budaya','manusia','sosial','institusional'],
+   pen:'👩‍🏫 Tepat! Meskipun keterampilan membuat perahu berakar pada budaya lokal, <strong>Aset Manusia</strong> yang dimaksud di sini adalah individu — sang tukang kayu dengan keahlian spesifik yang secara aktif berkontribusi. Aset budaya bersifat kolektif; aset manusia bersifat personal.',
+   ff:'💡 Ini soal ambigu klasik! Kuncinya: apakah yang kita bicarakan adalah orangnya atau nilai/tradisinya?'},
+
+  {type:'pilihan',lok:'SDN Dayak Pedalaman, Kalimantan Timur',
+   ske:'Sekolah secara konsisten memanfaatkan ritual "Naik Dango" (pesta panen) sebagai konteks pembelajaran matematika (hitung panen), sains (siklus tanam), dan seni (tarian adat).',
+   soal:'Ritual Naik Dango yang diintegrasikan ke kurikulum ini adalah aset apa?',
+   jwb:'budaya',opsi:['sosial','budaya','manusia','fisik'],
+   pen:'🎭 Benar! Ritual adat, tradisi, dan kearifan lokal yang diintegrasikan ke pembelajaran adalah <strong>Aset Budaya</strong>. Meski melibatkan komunitas (sosial), objeknya adalah tradisi itu sendiri — bukan jaringan orangnya.',
+   ff:'💡 Sekolah yang berhasil mengintegrasikan budaya lokal ke kurikulum memiliki tingkat literasi dasar 23% lebih tinggi (penelitian UNICEF 2022)!'},
+
+  {type:'pilihan',lok:'SDN Perbukitan Flores, NTT',
+   ske:'Kepala sekolah berhasil mendapatkan status "Sekolah Binaan" dari Kantor Wilayah Kemendikbud. Status ini memberi akses prioritas ke pelatihan guru, kunjungan pengawas, dan distribusi buku.',
+   soal:'Status "Sekolah Binaan" dari Kanwil Kemendikbud ini merupakan aset apa?',
+   jwb:'institusional',opsi:['ekonomi','manusia','institusional','sosial'],
+   pen:'📋 Tepat! Status formal dari lembaga pemerintah yang memberikan akses sistemik ke sumber daya adalah <strong>Aset Institusional</strong>. Status ini berbeda dari "kenal baik dengan pejabat" (sosial) — ini legal, tertulis, dan dapat diwariskan.',
+   ff:'💡 Aset institusional bersifat "melekat pada lembaga", bukan pada individu — jika kepala sekolah berganti, aset ini tetap ada!'},
+
+  {type:'benar_salah',lok:'Diskusi Konsep Lanjutan',
+   ske:'Seorang peserta berpendapat: "Kepercayaan yang dibangun antara guru dan orang tua murid selama bertahun-tahun adalah Aset Sosial, karena hubungan ini bisa mendorong orang tua untuk aktif mendukung program sekolah."',
+   soal:'Apakah pendapat peserta tersebut BENAR?',
+   jwb:'benar',
+   pen:'✅ <strong>BENAR</strong>. Kepercayaan yang terbangun antarindividu dalam komunitas adalah modal sosial — inti dari <strong>Aset Sosial</strong>. Contoh ini menggambarkan bagaimana relasi yang berkualitas menghasilkan tindakan nyata yang menguntungkan sekolah.',
+   ff:'💡 Modal sosial (Putnam, 1995) memiliki dua dimensi: bonding (ikatan internal) dan bridging (jembatan ke luar). Sekolah 3T yang kuat biasanya unggul di keduanya!'},
+
+  {type:'benar_salah',lok:'Studi Kasus SDN Harapan Jaya',
+   ske:'Dalam laporan aset SDN Harapan Jaya, disebutkan: "Dana BOS yang diterima sekolah termasuk Aset Institusional karena berasal dari program pemerintah yang terlembaga."',
+   soal:'Apakah pernyataan dalam laporan tersebut BENAR?',
+   jwb:'salah',
+   pen:'❌ <strong>SALAH</strong>. Dana BOS adalah <strong>Aset Ekonomi</strong>, bukan institusional. Perbedaannya: aset institusional = hubungan/akses/program/kebijakan yang terlembaga. Aset ekonomi = sumber daya keuangan/material yang bisa digunakan. Dana adalah wujud ekonomi, bukan institusi.',
+   ff:'💡 Ini jebakan klasik! Program BOS (institusional) menghasilkan dana BOS (ekonomi). Asetnya berbeda meskipun saling terkait!'},
+
+  {type:'pilihan',lok:'SDN Kepulauan Togean, Sulawesi Tengah',
+   ske:'Seorang guru honorer membentuk "Komunitas Belajar Guru Kepulauan" di WhatsApp yang kini beranggotakan 47 guru dari 12 pulau berbeda, berbagi RPP, LKS, dan solusi mengajar setiap hari.',
+   soal:'Komunitas belajar WhatsApp yang terbentuk organik ini adalah aset apa?',
+   jwb:'sosial',opsi:['institusional','manusia','sosial','budaya'],
+   pen:'🤝 Tepat! Komunitas belajar informal berbasis kepercayaan dan kolaborasi sukarela adalah <strong>Aset Sosial</strong>. Bedanya dengan institusional: tidak ada MoU, tidak formal, tumbuh dari kepercayaan. Sang guru pendirinya = manusia; komunitasnya = sosial.',
+   ff:'💡 Komunitas praktik (community of practice) informal sering lebih efektif dari pelatihan formal dalam mengubah praktik mengajar!'},
+
+  {type:'pilihan',lok:'SDN Tebas, Kalimantan Barat',
+   ske:'Sekolah memiliki kebun durian seluas 0,5 hektar yang ditanam 20 tahun lalu. Kini hasil panennya dijual dan menghasilkan Rp 8 juta per tahun yang masuk kas sekolah.',
+   soal:'Kebun durian produktif milik sekolah ini secara UTAMA adalah aset apa?',
+   jwb:'ekonomi',opsi:['fisik','ekonomi','budaya','sosial'],
+   pen:'💰 Tepat! Meskipun kebun adalah aset fisik, ketika kita bicara tentang kebun <em>produktif yang menghasilkan pendapatan</em>, fokus utamanya adalah <strong>Aset Ekonomi</strong>. Tanah/pohonnya = fisik; kapasitas menghasilkan pendapatan = ekonomi.',
+   ff:'💡 Satu aset bisa memiliki dimensi ganda! Kebun = fisik sekaligus ekonomi. Pemetaan aset yang baik mencatat semua dimensinya.'},
+
+  {type:'dragdrop',lok:'Analisis Multidimensi Aset',
+   ske:'Fasilitator APD senior melakukan workshop pemetaan aset dengan 4 kepala sekolah dari daerah 3T yang berbeda.',
+   soal:'Klasifikasikan aset-aset kompleks berikut dengan tepat!',
+   zones:[{id:'sosial',l:'Aset Sosial',i:'🤝'},{id:'institusional',l:'Aset Institusional',i:'📋'},{id:'budaya',l:'Aset Budaya',i:'🎭'}],
+   items:[
+     {id:'i1',t:'📜 Perjanjian informal turun-temurun warga menjaga hutan sekolah',z:'budaya'},
+     {id:'i2',t:'🤝 Kepercayaan kuat antara kepala sekolah dan tokoh adat setempat',z:'sosial'},
+     {id:'i3',t:'🏛️ SK Bupati yang menetapkan sekolah sebagai pusat kebudayaan desa',z:'institusional'},
+     {id:'i4',t:'📱 Grup alumni di media sosial yang aktif berbagi info lowongan',z:'sosial'},
+     {id:'i5',t:'🎵 Sistem pengetahuan musikal tradisional Sape yang diajarkan turun-temurun',z:'budaya'},
+     {id:'i6',t:'📋 Program beasiswa dari Pemerintah Provinsi khusus murid 3T',z:'institusional'},
+   ],
+   pen:'✅ Brilian! Kunci pemetaan: <strong>Sosial</strong> = relasi kepercayaan informal antarindividu/grup. <strong>Institusional</strong> = dokumen resmi, program pemerintah, kebijakan formal. <strong>Budaya</strong> = pengetahuan/nilai/praktik tradisional yang diwariskan.'},
+
+  {type:'benar_salah',lok:'Kasus Ambigu — Tingkat Lanjut',
+   ske:'"Seorang pengusaha lokal yang sering menyumbang sekolah" dimasukkan ke dalam kategori Aset Ekonomi karena ia merupakan sumber pendanaan bagi sekolah.',
+   soal:'Apakah pengklasifikasian tersebut TEPAT?',
+   jwb:'salah',
+   pen:'❌ <strong>TIDAK TEPAT</strong>. Pengusaha sebagai individu adalah <strong>Aset Manusia</strong> atau <strong>Aset Sosial</strong> (jika fokus pada hubungannya dengan sekolah). Dana/sumbangan yang ia berikan barulah <strong>Aset Ekonomi</strong>. Orangnya ≠ uangnya!',
+   ff:'💡 Kesalahan klasifikasi ini sering terjadi. Selalu tanyakan: apakah yang kita asetkan adalah orangnya, hubungannya, atau sumber dayanya?'},
+
+  {type:'pilihan',lok:'SDN Ujung Kulon, Banten',
+   ske:'Seorang guru kreatif di sekolah terpencil membuat 40 video pembelajaran lokal (tentang flora Ujung Kulon, kisah nelayan, dan matematika kontekstual) yang kini diakses 12.000 kali di YouTube.',
+   soal:'Konten video pembelajaran lokal buatan guru ini adalah aset apa?',
+   jwb:'digital',opsi:['manusia','budaya','digital','sosial'],
+   pen:'💻 Tepat! Konten digital yang dapat diakses, dibagikan, dan dimanfaatkan ulang adalah <strong>Aset Digital</strong>. Sang gurunya = aset manusia; video yang dihasilkan = aset digital. Keduanya berbeda tapi saling menguatkan!',
+   ff:'💡 Konten digital buatan guru lokal adalah aset digital paling kontekstual — tidak bisa dibeli, hanya bisa diciptakan oleh guru yang benar-benar mengenal konteks daerahnya!'},
+
+  {type:'dragdrop',lok:'Grand Final — Pemetaan Komprehensif',
+   ske:'Tim Alumni Pejuang Digital melakukan pemetaan menyeluruh semua aset di SDN Model Terpencil.',
+   soal:'Seret semua aset ke kategori yang paling tepat — soal terakhir, yang terberat!',
+   zones:[{id:'manusia',l:'Aset Manusia',i:'👩‍🏫'},{id:'digital',l:'Aset Digital',i:'💻'},{id:'budaya',l:'Aset Budaya',i:'🎭'}],
+   items:[
+     {id:'i1',t:'🎓 Guru PJOK lulusan S1 yang juga pelatih sepak takraw nasional',z:'manusia'},
+     {id:'i2',t:'🌾 Ritual "Mappanre Temme" yang dijadikan proyek Profil Pelajar Pancasila',z:'budaya'},
+     {id:'i3',t:'📲 Aplikasi absensi & rapor digital yang sudah dikuasai semua guru',z:'digital'},
+     {id:'i4',t:'👴 Tokoh adat yang fasih mengajarkan sistem kalender tradisional',z:'manusia'},
+     {id:'i5',t:'🎨 Motif tenun khas daerah yang didokumentasikan murid jadi media belajar',z:'budaya'},
+     {id:'i6',t:'🌐 Koneksi internet berbasis satelit aktif di laboratorium komputer',z:'digital'},
+   ],
+   pen:'✅ LUAR BIASA! Pemetaan 6 aset sempurna. <strong>Manusia</strong> = individu+keahlian. <strong>Digital</strong> = platform/konten/konektivitas digital. <strong>Budaya</strong> = tradisi/nilai/praktik lokal. Selamat — Anda siap jadi fasilitator APD sejati!'},
+
+  {type:'pilihan',lok:'Uji Konsep Final',
+   ske:'Dalam diskusi, seorang peserta berargumen bahwa "7 aset sekolah bersifat mutually exclusive — satu potensi hanya bisa masuk satu kategori." Seorang peserta lain menyanggah bahwa beberapa potensi bisa memiliki dimensi aset ganda.',
+   soal:'Menurut pendekatan pola pikir berbasis aset, mana perspektif yang lebih tepat?',
+   jwb:'ganda',opsi:['tunggal','ganda','tergantung','tidak-ada'],
+   opsiLabel:{'tunggal':'Satu potensi = satu aset saja','ganda':'Potensi bisa punya dimensi aset ganda','tergantung':'Bergantung konteks sekolah','tidak-ada':'Keduanya tidak tepat sepenuhnya'},
+   pen:'🧠 Jawaban terbaik: <strong>Potensi bisa punya dimensi aset ganda</strong>. Contoh: guru TIK yang membuat konten = manusia + digital. Tablet berisi konten pembelajaran = fisik + digital. Fleksibilitas kategorisasi justru memperkaya pemetaan aset!',
+   ff:'💡 ABCD (Asset-Based Community Development) menekankan bahwa pemetaan terbaik menangkap seluruh dimensi potensi — termasuk dimensi digital yang sering terlewat di sekolah 3T!'},
+];
+
+/* ══════════════════════════════════════════════════
+   VERSUS SOAL BANK (campuran semua level)
+══════════════════════════════════════════════════ */
+const VS_BANK = [
+  {lok:'Papua Pegunungan',ske:'Pak Yohanes, guru kelas rangkap fasih bahasa Mee, mengajar kelas 1–3 sekaligus.',soal:'Keahlian Pak Yohanes adalah aset apa?',jwb:'manusia',opsi:['manusia','sosial','budaya','institusional']},
+  {lok:'Maluku Barat Daya',ske:'Nelayan-ayah murid bergantian hadir setiap Jumat bercerita kearifan laut.',soal:'Keterlibatan sukarela nelayan adalah aset apa?',jwb:'sosial',opsi:['budaya','sosial','manusia','ekonomi']},
+  {lok:'Kalimantan Utara',ske:'Lahan 200m² milik sekolah yang dulunya tempat pembuangan dijadikan kebun sayur.',soal:'Lahan sekolah yang dioptimalkan ini adalah aset apa?',jwb:'fisik',opsi:['budaya','ekonomi','fisik','sosial']},
+  {lok:'Riau Kepulauan',ske:'Ada MoU resmi antara sekolah dan Puskesmas untuk edukasi gizi bulanan.',soal:'Kemitraan MoU dengan Puskesmas adalah aset apa?',jwb:'institusional',opsi:['manusia','sosial','institusional','fisik']},
+  {lok:'Kalimantan Barat',ske:'Komite sekolah menyisihkan hasil panen karet Rp 3 juta untuk beli buku.',soal:'Dana dari hasil panen komunitas ini adalah aset apa?',jwb:'ekonomi',opsi:['sosial','ekonomi','budaya','institusional']},
+  {lok:'Nusa Tenggara Timur',ske:'Tua adat diundang tiap semester, menyampaikan nilai lokal dalam bahasa daerah.',soal:'Tradisi dan nilai yang dibawa tua adat adalah aset apa?',jwb:'budaya',opsi:['manusia','budaya','sosial','ekonomi']},
+  {lok:'Jambi',ske:'CSR perusahaan sawit memberikan material perbaikan gedung dan meja kursi.',soal:'Bantuan CSR berupa material ini adalah aset apa?',jwb:'ekonomi',opsi:['institusional','ekonomi','fisik','sosial']},
+  {lok:'Kepulauan Aru',ske:'Bu Kepsek 15 tahun pengalaman mendampingi guru SM3T lewat mentoring informal.',soal:'Kepemimpinan Bu Kepsek sebagai mentor adalah aset apa?',jwb:'manusia',opsi:['manusia','institusional','sosial','budaya']},
+  {lok:'Aceh Tengah',ske:'Program KKN tematik Unsyiah tiap semester kirim 4 mahasiswa ke sekolah.',soal:'Program KKN terlembaga dari universitas adalah aset apa?',jwb:'institusional',opsi:['manusia','sosial','institusional','ekonomi']},
+  {lok:'NTB',ske:'Guru seni dokumentasikan 7 anyaman Sasak hampir punah jadi galeri sekolah.',soal:'Kearifan anyaman Sasak yang dihidupkan kembali adalah aset apa?',jwb:'budaya',opsi:['budaya','ekonomi','manusia','fisik']},
+  {lok:'Sumba Timur',ske:'"Komite Jaga Sekolah" warga bergantian jaga sekolah tanpa imbalan.',soal:'Komite sukarela warga ini adalah aset apa?',jwb:'sosial',opsi:['manusia','budaya','sosial','ekonomi']},
+  {lok:'Sulawesi Tengah',ske:'Aula serbaguna 5 tahun tidak terpakai, kondisi rusak ringan.',soal:'Aula yang tidak terpakai ini adalah aset apa?',jwb:'fisik',opsi:['ekonomi','fisik','institusional','sosial']},
+  {lok:'Kalimantan Barat',ske:'Platform Merdeka Mengajar aktif digunakan 8 guru untuk membuat modul ajar dan asesmen digital.',soal:'Platform Merdeka Mengajar yang aktif digunakan guru adalah aset apa?',jwb:'digital',opsi:['institusional','digital','fisik','manusia']},
+  {lok:'Sulawesi Tengah',ske:'Tradisi Padungku panen syukur selalu melibatkan anak-anak sekolah.',soal:'Tradisi Padungku yang melibatkan anak-anak adalah aset apa?',jwb:'budaya',opsi:['sosial','budaya','manusia','institusional']},
+  {lok:'Togean',ske:'Guru honorer bentuk grup WA 47 guru 12 pulau untuk berbagi RPP tiap hari.',soal:'Komunitas belajar WhatsApp informal ini adalah aset apa?',jwb:'sosial',opsi:['institusional','manusia','sosial','budaya']},
+  {lok:'Papua Barat',ske:'Sekolah punya 6 tablet berisi konten offline SIBI dan buku digital iPusnas.',soal:'Tablet berkonten offline pembelajaran ini adalah aset apa?',jwb:'digital',opsi:['fisik','digital','ekonomi','institusional']},
+];
+
+/* ══════════════════════════════════════════════════
+   QUIZ STATE
+══════════════════════════════════════════════════ */
+let CUR_LEVEL='', CUR_BANK=[], Q_IDX=0, SCORE=0, ANSWERED=false, HASIL=[];
+let DRAG_ITEM=null, TOUCH_ITEM=null, TOUCH_CLONE=null;
+
+/* ══════════════════════════════════════════════════
+   SCREEN MANAGEMENT
+══════════════════════════════════════════════════ */
+function show(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById('sc-'+id).classList.add('on');
+}
+
+function goHome(){
+  if(VS_TIMER) clearInterval(VS_TIMER);
+  show('home');
+}
+
+function startQuiz(level){
+  CUR_LEVEL=level;
+  CUR_BANK = level==='moderate'?[...MODERATE]:level==='hard'?[...HARD]:[...VHARD];
+  Q_IDX=0; SCORE=0; ANSWERED=false; HASIL=[];
+  const sb=document.getElementById('sbadge');
+  sb.className='sbadge '+level;
+  show('quiz');
+  renderSoal();
+}
+
+function ulang(){ startQuiz(CUR_LEVEL); }
+
+/* ══════════════════════════════════════════════════
+   RENDER SOAL (SOLO)
+══════════════════════════════════════════════════ */
+function renderProgBar(){
+  const n=CUR_BANK.length;
+  // Build segments
+  const segs=Array.from({length:n},(_, i)=>{
+    let cls='prog-seg';
+    if(i<Q_IDX){cls+=' '+(HASIL[i]?'done-ok':'done-ng');}
+    else if(i===Q_IDX) cls+=' current';
+    return `<div class="${cls}" title="Soal ${i+1}"></div>`;
+  }).join('');
+  document.getElementById('prog-segs').innerHTML=segs;
+  document.getElementById('prog-label').textContent=`Soal ${Q_IDX+1} dari ${n}`;
+  document.getElementById('prog-poin').textContent=`🎯 ${SCORE} benar`;
+
+  // Streak
+  const streak=document.getElementById('prog-streak');
+  let consecutive=0;
+  for(let i=HASIL.length-1;i>=0;i--){if(HASIL[i])consecutive++;else break;}
+  if(consecutive>=3){
+    streak.textContent=`🔥 Streak ${consecutive} jawaban benar berturut-turut!`;
+    streak.className='prog-streak fire';
+  } else if(consecutive===2){
+    streak.textContent=`⚡ 2 benar berturut! Pertahankan!`;
+    streak.className='prog-streak';
+  } else {
+    streak.textContent='';
+    streak.className='prog-streak';
+  }
+}
+
+function renderSoal(){
+  const q=CUR_BANK[Q_IDX], n=CUR_BANK.length;
+  document.getElementById('qnum').textContent=(Q_IDX+1)+' / '+n;
+  document.getElementById('sbadge').textContent=SCORE+' poin';
+  document.getElementById('fb-area').innerHTML='';
+  document.getElementById('btn-nxt').classList.remove('show');
+  renderProgBar();
+
+  const lvLabel={moderate:'⭐ Moderate',hard:'⭐⭐ Hard',vhard:'⭐⭐⭐ Very Hard'}[CUR_LEVEL];
+  const lvCls={moderate:'lp-mod',hard:'lp-hard',vhard:'lp-vhard'}[CUR_LEVEL];
+  const typLabel={pilihan:'🎯 Pilihan Ganda',dragdrop:'🖱️ Drag & Drop',benar_salah:'✔✘ Benar / Salah'}[q.type];
+  const tpCls={pilihan:'tp-pg',dragdrop:'tp-dd',benar_salah:'tp-bn'}[q.type];
+
+  const sken=`<div class="sken"><div class="sken-loc">📍 ${q.lok}</div><div class="sken-txt">${q.ske}</div></div>`;
+
+  let body='';
+  if(q.type==='pilihan') body=renderPilihan(q,false);
+  else if(q.type==='dragdrop') body=renderDD(q);
+  else body=renderBS(q);
+
+  document.getElementById('qcard').innerHTML=
+    `<span class="level-pill ${lvCls}">${lvLabel}</span><span class="type-pill ${tpCls}">${typLabel}</span>`
+    +sken
+    +`<div class="qtxt">${q.soal}</div>`
+    +body;
+
+  if(q.type==='dragdrop') setupDD(q, false);
+}
+
+/* ── PILIHAN GANDA ── */
+function renderPilihan(q, isVs){
+  const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+  const ids=shuffle(q.opsi);
+  return '<div class="pgrid">'
+    +ids.map(id=>{
+      const a=AD[id], lbl=q.opsiLabel?.[id]||('Aset '+a.l);
+      return `<button class="pbtn" id="pb-${id}" onclick="pickAnswer('${id}')">
+        <span class="pi">${a.i}</span><div class="pb"><span class="pn">${lbl}</span><span class="pd">${a.d}</span></div>
+      </button>`;
+    }).join('')
+    +'</div>';
+}
+
+/* ── BENAR / SALAH ── */
+function renderBS(q){
+  return `<div class="yn-grid">
+    <button class="yn-btn y" id="yn-benar" onclick="pickBS('benar')">✅ BENAR</button>
+    <button class="yn-btn n" id="yn-salah" onclick="pickBS('salah')">❌ SALAH</button>
+  </div>`;
+}
+
+function pickBS(val){
+  if(ANSWERED) return;
+  ANSWERED=true;
+  const q=CUR_BANK[Q_IDX];
+  const benar=val===q.jwb;
+  if(benar) SCORE++;
+  HASIL.push(benar);
+  ['benar','salah'].forEach(v=>{
+    const b=document.getElementById('yn-'+v);
+    if(!b) return;
+    b.disabled=true;
+    if(v===q.jwb) b.classList.add('ok');
+    else if(v===val&&!benar) b.classList.add('ng');
+  });
+  showFeedback(benar,q.pen,q.ff||'');
+}
+
+/* ── DRAG & DROP ── */
+function renderDD(q){
+  const items=q.items.map(it=>`<div class="ditem" id="di-${it.id}" data-id="${it.id}" draggable="true">${it.t}</div>`).join('');
+  const ncol=q.zones.length===3?'grid-template-columns:repeat(3,1fr)':'grid-template-columns:1fr 1fr';
+  const zones=q.zones.map(z=>`
+    <div class="dzone" id="dz-${z.id}" data-zone="${z.id}">
+      <div class="dzone-hdr"><span class="dzone-ic">${z.i}</span><span class="dzone-nm">${z.l}</span></div>
+      <div class="dzone-items" id="dzi-${z.id}"></div>
+    </div>`).join('');
+  return `<div class="pool-lbl">🗂️ Sumber Daya — seret ke zona yang tepat:</div>
+    <div class="pool" id="dd-pool">${items}</div>
+    <div class="dzones" id="dd-zones" style="${ncol};margin-bottom:1rem">${zones}</div>
+    <button class="btn-sub" id="btn-sub" onclick="cekDD()" disabled>Cek Jawaban ✓</button>`;
+}
+
+function setupDD(q, isVs){
+  document.querySelectorAll('.ditem').forEach(el=>{
+    el.addEventListener('dragstart',e=>{DRAG_ITEM=el;el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    el.addEventListener('dragend',()=>{el.classList.remove('dragging');DRAG_ITEM=null;ddCheckReady(q);});
+    el.addEventListener('touchstart',touchStart,{passive:false});
+    el.addEventListener('touchmove',touchMove,{passive:false});
+    el.addEventListener('touchend',e=>touchEnd(e,q));
+  });
+  [...document.querySelectorAll('.dzone'), document.getElementById('dd-pool')].forEach(zone=>{
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dov');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('dov'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('dov');
+      if(!DRAG_ITEM) return;
+      const zid=zone.dataset.zone;
+      (zid?document.getElementById('dzi-'+zid):document.getElementById('dd-pool')).appendChild(DRAG_ITEM);
+      ddCheckReady(q);
+    });
+  });
+}
+
+function ddCheckReady(q){
+  const remaining=document.getElementById('dd-pool')?.querySelectorAll('.ditem').length||0;
+  const sb=document.getElementById('btn-sub');
+  if(sb) sb.disabled=remaining>0;
+}
+
+function touchStart(e){
+  TOUCH_ITEM=e.currentTarget;
+  const r=TOUCH_ITEM.getBoundingClientRect();
+  TOUCH_CLONE=TOUCH_ITEM.cloneNode(true);
+  TOUCH_CLONE.style.cssText=`position:fixed;z-index:9999;pointer-events:none;opacity:.85;width:${r.width}px;top:${r.top}px;left:${r.left}px;border-radius:40px;background:#f0faf5;border:1.5px solid #52b788;padding:7px 14px;font-size:13px;font-weight:500;color:#1a1a1a`;
+  document.body.appendChild(TOUCH_CLONE);e.preventDefault();
+}
+function touchMove(e){
+  if(!TOUCH_CLONE) return;
+  const t=e.touches[0];
+  TOUCH_CLONE.style.top=(t.clientY-20)+'px';
+  TOUCH_CLONE.style.left=(t.clientX-60)+'px';
+  e.preventDefault();
+}
+function touchEnd(e,q){
+  if(!TOUCH_CLONE||!TOUCH_ITEM) return;
+  TOUCH_CLONE.remove();TOUCH_CLONE=null;
+  const t=e.changedTouches[0];
+  const el=document.elementFromPoint(t.clientX,t.clientY);
+  const zone=el?.closest('.dzone');
+  const pool=el?.closest('.pool');
+  if(zone) document.getElementById('dzi-'+zone.dataset.zone).appendChild(TOUCH_ITEM);
+  else if(pool) document.getElementById('dd-pool').appendChild(TOUCH_ITEM);
+  ddCheckReady(q);TOUCH_ITEM=null;
+}
+
+function cekDD(){
+  if(ANSWERED) return;
+  ANSWERED=true;
+  const q=CUR_BANK[Q_IDX];
+  let ok=0;
+  q.items.forEach(it=>{
+    const el=document.getElementById('di-'+it.id);
+    const pz=el?.parentElement?.closest('.dzone');
+    const benar=pz&&pz.dataset.zone===it.z;
+    if(benar) ok++;
+    el?.classList.add(benar?'ok':'ng');
+  });
+  q.zones.forEach(z=>{
+    const zone=document.getElementById('dz-'+z.id);
+    const hasNg=zone.querySelectorAll('.ng').length>0;
+    zone.classList.add(hasNg?'ng-z':'ok-z');
+  });
+  const allOk=ok===q.items.length;
+  if(allOk) SCORE++;
+  HASIL.push(allOk);
+  document.getElementById('btn-sub').disabled=true;
+  const extra=allOk?`🎊 Semua ${q.items.length} item diklasifikasi benar!`:`⚠️ ${ok}/${q.items.length} benar. Periksa item merah untuk belajar lebih lanjut.`;
+  showFeedback(allOk,q.pen,extra);
+}
+
+/* ── PICK ANSWER (SOLO) ── */
+function pickAnswer(id){
+  if(ANSWERED) return;
+  ANSWERED=true;
+  const q=CUR_BANK[Q_IDX];
+  const benar=id===q.jwb;
+  if(benar) SCORE++;
+  HASIL.push(benar);
+  document.querySelectorAll('.pbtn').forEach(b=>{b.disabled=true;b.onclick=null;});
+  const bOk=document.getElementById('pb-'+q.jwb);
+  const bNg=document.getElementById('pb-'+id);
+  if(bOk) bOk.classList.add(benar?'ok':'hi');
+  if(!benar&&bNg) bNg.classList.add('ng');
+  showFeedback(benar,q.pen,q.ff||'');
+}
+
+/* ── FEEDBACK (SOLO) ── */
+function showFeedback(benar,pen,extra){
+  const emojis=benar?['🎯','🌟','💡','🔥','✨','🎉']:['🤔','💭','📖','🔍'];
+  const titles=benar?['Luar biasa!','Tepat sekali!','Mantap!','Brilian!','Benar!']:['Belum tepat.','Hampir!','Pelajari lagi.','Coba lagi ya.'];
+  const em=emojis[Math.floor(Math.random()*emojis.length)];
+  const ti=titles[Math.floor(Math.random()*titles.length)];
+  document.getElementById('fb-area').innerHTML=
+    `<div class="fb ${benar?'ok':'ng'} show">
+      <div class="fb-em">${em}</div>
+      <div class="fb-ttl">${ti}</div>
+      <div class="fb-txt">${pen}${extra?'<br><br><em style="font-size:12.5px">'+extra+'</em>':''}</div>
+    </div>`;
+  document.getElementById('sbadge').textContent=SCORE+' poin';
+  const nb=document.getElementById('btn-nxt');
+  nb.textContent=Q_IDX===CUR_BANK.length-1?'Lihat Hasil Akhir 🏆':'Soal Berikutnya →';
+  nb.classList.add('show');
+}
+
+function nextSoal(){
+  Q_IDX++;
+  if(Q_IDX>=CUR_BANK.length){tampilHasil();return;}
+  ANSWERED=false;
+  document.getElementById('btn-nxt').classList.remove('show');
+  renderSoal();
+}
+
+/* ── HASIL ── */
+function tampilHasil(){
+  show('hasil');
+  const n=CUR_BANK.length, pct=Math.round(SCORE/n*100);
+  let trophy,msg;
+  if(pct>=90){trophy='🏆';msg=`<strong>Sempurna!</strong> Kamu menguasai ketujuh jenis aset dengan sangat baik. Siap memimpin transformasi berbasis aset di lapangan!`;}
+  else if(pct>=70){trophy='🌟';msg=`<strong>Hebat!</strong> Pemahamanmu solid. Perhatikan lagi perbedaan Sosial vs Institusional, dan Manusia vs Budaya — pasangan yang paling sering membingungkan.`;}
+  else if(pct>=50){trophy='📚';msg=`<strong>Terus berkembang!</strong> Fondasi sudah ada. Ingat: Manusia=individu, Sosial=relasi, Fisik=benda/lahan, Institusional=MoU/program, Ekonomi=dana, Budaya=tradisi.`;}
+  else{trophy='💪';msg=`<strong>Jangan menyerah!</strong> Pola pikir berbasis aset butuh latihan. Coba lagi dari level Moderate, kemudian naik pelan-pelan!`;}
+  document.getElementById('h-trophy').textContent=trophy;
+  document.getElementById('h-score').textContent=SCORE+'/'+n;
+  document.getElementById('h-pct').textContent=pct+'% soal dijawab benar';
+  document.getElementById('h-msg').innerHTML=msg;
+  document.getElementById('h-grid').innerHTML=HASIL.map((b,i)=>`<div class="hdot ${b?'ok':'ng'}">${i+1}</div>`).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   VERSUS MODE
+══════════════════════════════════════════════════ */
+let VS_P1='', VS_P2='', VS_ROUNDS=5, VS_CUR=0;
+let VS_S1=0, VS_S2=0;
+let VS_BANK_SHUFFLED=[], VS_ANSWERED=false;
+let VS_TIMER=null, VS_TIME_LEFT=15;
+// Independent player answered tracking
+let VS_P1_ANSWERED=false, VS_P2_ANSWERED=false;
+
+function setRounds(n, btn){
+  VS_ROUNDS=n;
+  document.querySelectorAll('.vs-r-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function showVsSetup(){
+  show('vs');
+  document.getElementById('vs-setup').style.display='flex';
+  document.getElementById('vs-game').style.display='none';
+  document.getElementById('vs-final').style.display='none';
+}
+
+function startVs(){
+  VS_P1=document.getElementById('vn1').value.trim()||'Pemain 1';
+  VS_P2=document.getElementById('vn2').value.trim()||'Pemain 2';
+  VS_S1=0; VS_S2=0; VS_CUR=0; VS_ANSWERED=false;
+  VS_P1_ANSWERED=false; VS_P2_ANSWERED=false;
+  VS_BANK_SHUFFLED=[...VS_BANK].sort(()=>Math.random()-.5).slice(0,VS_ROUNDS);
+  document.getElementById('vp1-name').textContent=VS_P1;
+  document.getElementById('vp2-name').textContent=VS_P2;
+  document.getElementById('vs-setup').style.display='none';
+  document.getElementById('vs-game').style.display='flex';
+  document.getElementById('vs-final').style.display='none';
+  renderVsQ();
+}
+
+function renderVsQ(){
+  VS_ANSWERED=false;
+  VS_P1_ANSWERED=false;
+  VS_P2_ANSWERED=false;
+  const q=VS_BANK_SHUFFLED[VS_CUR];
+  if(!q){vsEnd();return;}
+
+  // Update scoreboard
+  document.getElementById('vs-rnum').textContent=(VS_CUR+1)+'/'+VS_ROUNDS;
+  document.getElementById('vp1-score').textContent=VS_S1;
+  document.getElementById('vp2-score').textContent=VS_S2;
+
+  // Reset UI
+  document.getElementById('vs-timeout-bar').className='vs-timeout-bar';
+  document.getElementById('vs-timeout-bar').textContent='';
+  document.getElementById('vs-nxt-bar').className='vs-nxt-bar';
+
+  // Question center
+  document.getElementById('vs-q-center').innerHTML=`
+    <div class="vs-sken-loc">📍 ${q.lok}</div>
+    <div class="vs-sken-txt">${q.ske}</div>
+    <div class="vs-qtxt">${q.soal}</div>`;
+
+  // Reset timer bar
+  const fill=document.getElementById('vs-tfill');
+  fill.style.transition='none';
+  fill.style.width='100%';
+  fill.className='vs-timer-fill';
+  document.getElementById('vs-tnum').textContent='15';
+
+  // Build answer buttons - same shuffled order for both sides
+  const shuffled=[...q.opsi].sort(()=>Math.random()-.5);
+
+  function makeBtns(player){
+    return shuffled.map(id=>{
+      const a=AD[id];
+      return `<button class="vs-abtn" id="ab${player}-${id}" onclick="vsAnswer(${player},'${id}')">
+        <span class="ai">${a.i}</span>
+        <div>
+          <span class="an">Aset ${a.l}</span>
+          <span class="ad">${a.d}</span>
+        </div>
+      </button>`;
+    }).join('');
+  }
+
+  document.getElementById('vs-half1').innerHTML=`
+    <div class="vs-half-label">👤 ${VS_P1}</div>
+    <div class="vs-ans-list">${makeBtns(1)}</div>
+    <div class="vs-half-fb" id="vfb1"></div>`;
+
+  document.getElementById('vs-half2').innerHTML=`
+    <div class="vs-half-label">👤 ${VS_P2}</div>
+    <div class="vs-ans-list">${makeBtns(2)}</div>
+    <div class="vs-half-fb" id="vfb2"></div>`;
+
+  // Start timer after short delay so transition works
+  setTimeout(()=>{
+    fill.style.transition='width .9s linear';
+    startVsTimer(q);
+  },50);
+}
+
+function startVsTimer(q){
+  VS_TIME_LEFT=15;
+  if(VS_TIMER) clearInterval(VS_TIMER);
+  VS_TIMER=setInterval(()=>{
+    VS_TIME_LEFT--;
+    const fill=document.getElementById('vs-tfill');
+    const num=document.getElementById('vs-tnum');
+    if(fill){
+      fill.style.width=(VS_TIME_LEFT/15*100)+'%';
+      if(VS_TIME_LEFT<=5) fill.classList.add('warn');
+    }
+    if(num) num.textContent=VS_TIME_LEFT;
+    if(VS_TIME_LEFT<=0){
+      clearInterval(VS_TIMER);
+      if(!VS_ANSWERED) vsTimeOut(q);
+    }
+  },1000);
+}
+
+function vsAnswer(player, id){
+  // Block if this player already answered
+  if(player===1 && VS_P1_ANSWERED) return;
+  if(player===2 && VS_P2_ANSWERED) return;
+
+  const q=VS_BANK_SHUFFLED[VS_CUR];
+  const benar=id===q.jwb;
+  const bonus=Math.max(0, Math.ceil(VS_TIME_LEFT/3));
+  const poin=benar?(1+bonus):0;
+
+  // Mark this player as answered
+  if(player===1) VS_P1_ANSWERED=true;
+  else VS_P2_ANSWERED=true;
+
+  // Lock only this player's buttons
+  const prefix=`ab${player}-`;
+  document.querySelectorAll(`[id^="${prefix}"]`).forEach(b=>{b.disabled=true;b.onclick=null;});
+
+  // Highlight result on this player's side
+  const bOk=document.getElementById(prefix+q.jwb);
+  const bNg=document.getElementById(prefix+id);
+  if(bOk) bOk.classList.add(benar?'ok':'hi');
+  if(!benar&&bNg) bNg.classList.add('ng');
+
+  // Update score
+  if(player===1) VS_S1+=poin;
+  else VS_S2+=poin;
+  document.getElementById('vp1-score').textContent=VS_S1;
+  document.getElementById('vp2-score').textContent=VS_S2;
+
+  // Show feedback for this player
+  const pName=player===1?VS_P1:VS_P2;
+  const fb=document.getElementById('vfb'+player);
+  if(benar){
+    fb.textContent=`✅ Benar! +${poin} poin${bonus>0?' (⚡ kecepatan)':''}`;
+    fb.className='vs-half-fb ok show';
+  } else {
+    fb.textContent=`❌ Salah! Lawan masih bisa menjawab…`;
+    fb.className='vs-half-fb ng show';
+  }
+
+  // If both answered OR this was correct → end round
+  const bothDone=VS_P1_ANSWERED && VS_P2_ANSWERED;
+  if(benar || bothDone){
+    // This correct answer ends the round — lock remaining player
+    if(benar && !bothDone){
+      const otherPrefix=player===1?'ab2-':'ab1-';
+      document.querySelectorAll(`[id^="${otherPrefix}"]`).forEach(b=>{b.disabled=true;b.onclick=null;b.classList.add('locked');});
+      const fbOther=document.getElementById('vfb'+(player===1?2:1));
+      if(fbOther && !fbOther.classList.contains('show')){
+        fbOther.textContent=`😔 Didahului ${pName}!`;
+        fbOther.className='vs-half-fb wait show';
+      }
+    }
+    // If both answered and neither was correct, show correct on both
+    if(bothDone && !benar){
+      [`ab1-${q.jwb}`,`ab2-${q.jwb}`].forEach(elId=>{
+        const el=document.getElementById(elId);
+        if(el && !el.classList.contains('ok')) el.classList.add('hi');
+      });
+      const fbOther=document.getElementById('vfb'+(player===1?2:1));
+      if(fbOther && !fbOther.classList.contains('show')){
+        fbOther.textContent=`❌ Salah! Jawaban: Aset ${AD[q.jwb].l} ${AD[q.jwb].i}`;
+        fbOther.className='vs-half-fb ng show';
+      }
+      fb.textContent=`❌ Salah! Jawaban: Aset ${AD[q.jwb].l} ${AD[q.jwb].i}`;
+    }
+
+    clearInterval(VS_TIMER);
+    VS_ANSWERED=true;
+    const nxtBar=document.getElementById('vs-nxt-bar');
+    nxtBar.querySelector('.btn-vs-nxt').textContent=
+      VS_CUR===VS_ROUNDS-1?'Lihat Hasil Akhir 🏆':'Soal Berikutnya →';
+    nxtBar.className='vs-nxt-bar show';
+  }
+}
+
+function vsTimeOut(q){
+  VS_ANSWERED=true;
+  document.querySelectorAll('.vs-abtn').forEach(b=>{b.disabled=true;b.onclick=null;});
+
+  [`ab1-${q.jwb}`,`ab2-${q.jwb}`].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && !el.classList.contains('ok')) el.classList.add('hi');
+  });
+
+  const bar=document.getElementById('vs-timeout-bar');
+  bar.textContent=`⏰ Waktu habis! Jawaban: Aset ${AD[q.jwb].l} ${AD[q.jwb].i} — tidak ada poin.`;
+  bar.className='vs-timeout-bar show';
+
+  [1,2].forEach(p=>{
+    const el=document.getElementById('vfb'+p);
+    if(el && !el.classList.contains('show')){
+      el.textContent='⏰ Waktu habis!';
+      el.className='vs-half-fb ng show';
+    }
+  });
+
+  const nxtBar=document.getElementById('vs-nxt-bar');
+  nxtBar.querySelector('.btn-vs-nxt').textContent=
+    VS_CUR===VS_ROUNDS-1?'Lihat Hasil Akhir 🏆':'Soal Berikutnya →';
+  nxtBar.className='vs-nxt-bar show';
+}
+
+function vsNext(){
+  VS_CUR++;
+  if(VS_CUR>=VS_ROUNDS){vsEnd();return;}
+  renderVsQ();
+}
+
+function vsEnd(){
+  clearInterval(VS_TIMER);
+  document.getElementById('vs-game').style.display='none';
+  document.getElementById('vs-final').style.display='flex';
+  const draw=VS_S1===VS_S2;
+  const p1win=VS_S1>VS_S2;
+  document.getElementById('vf-trophy').textContent=draw?'🤝':'🏆';
+  document.getElementById('vf-winner').textContent=draw?'Seri!':(p1win?VS_P1:VS_P2);
+  document.getElementById('vf-sub').textContent=draw
+    ?`${VS_P1} dan ${VS_P2} sama-sama jago!`
+    :`Menguasai pola pikir berbasis aset! 🎉`;
+  document.getElementById('vf-scores').innerHTML=`
+    <div class="vs-fs-card ${p1win||draw?'winner':''}">
+      <div class="vs-fs-name">${VS_P1}</div>
+      <div class="vs-fs-num">${VS_S1}</div>
+    </div>
+    <div class="vs-fs-card ${!p1win||draw?'winner':''}">
+      <div class="vs-fs-name">${VS_P2}</div>
+      <div class="vs-fs-num">${VS_S2}</div>
+    </div>`;
+}
+
+function vsAgain(){
+  document.getElementById('vs-setup').style.display='flex';
+  document.getElementById('vs-game').style.display='none';
+  document.getElementById('vs-final').style.display='none';
+}
+</script>
+</body>
+</html>
