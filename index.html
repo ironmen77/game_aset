@@ -61,11 +61,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .lv-vhard{background:#fce4ec;color:#c2185b}
 .lv-vs{background:var(--am);color:var(--g1)}
 .credit{margin-top:1.5rem;font-size:12px;color:var(--muted);opacity:.7}
-.dev-footer{margin-top:.75rem;display:flex;flex-direction:column;align-items:center;gap:6px}
-.dev-name{font-size:12px;color:var(--muted);opacity:.8}
-.dev-name strong{color:var(--g2)}
-.dev-ig{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:#c2185b;text-decoration:none;background:#fff0f5;border:1.5px solid #f8bbd0;border-radius:40px;padding:5px 14px 5px 10px;transition:all .2s}
-.dev-ig:hover{background:#fce4ec;border-color:#f48fb1;transform:translateY(-1px);box-shadow:0 3px 12px rgba(194,24,91,.15)}
 
 /* ── QUIZ HEADER ── */
 .qhdr{padding:1.25rem 0 0}
@@ -173,6 +168,16 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* ── HASIL ── */
 .hasil-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.25rem;text-align:center}
 .h-trophy{font-size:64px;margin-bottom:1rem;animation:bou 1s ease}
+
+/* ── RESULT IMAGE ── */
+.result-img-wrap{margin:.5rem 0 1.25rem;animation:su .5s ease}
+.result-img{width:160px;height:160px;object-fit:cover;border-radius:20px;border:3px solid var(--gp);box-shadow:0 6px 24px rgba(26,58,42,.15)}
+.result-img-caption{font-size:12px;color:var(--muted);margin-top:6px;font-style:italic}
+
+/* VS RESULT IMAGE */
+.vs-result-img-wrap{margin:.5rem 0 1.25rem;animation:su .5s ease}
+.vs-result-img{width:140px;height:140px;object-fit:cover;border-radius:16px;border:3px solid rgba(233,196,106,.5);box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.vs-result-img-caption{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;font-style:italic}
 @keyframes bou{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px)}60%{transform:translateY(-10px)}}
 .h-score{font-family:'Fraunces',serif;font-size:clamp(3rem,10vw,5rem);font-weight:700;color:var(--g1);line-height:1;margin-bottom:4px}
 .h-pct{font-size:16px;color:var(--muted);margin-bottom:1.5rem}
@@ -191,8 +196,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* ══════════════════════════════════
    VERSUS MODE
 ══════════════════════════════════ */
-#sc-vs{background:var(--g1);min-height:100vh;color:var(--wh);flex-direction:column}
-#sc-vs.on{display:flex}
+#sc-vs{background:var(--g1);min-height:100vh;color:var(--wh);display:flex;flex-direction:column}
 .vs-bg{flex:1;display:flex;flex-direction:column;min-height:100vh}
 
 /* VS SETUP */
@@ -311,35 +315,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .btn-vs-again:hover{background:#f0d060;transform:translateY(-2px)}
 .btn-vs-home{background:rgba(255,255,255,.12);color:var(--wh);border:1.5px solid rgba(255,255,255,.35);border-radius:var(--r);padding:14px 28px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s}
 .btn-vs-home:hover{background:rgba(255,255,255,.22)}
-
-/* ── STREAK POPUP ── */
-.streak-pop{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);z-index:9999;pointer-events:none;font-family:'Fraunces',serif;font-weight:700;font-size:2.4rem;color:#e65100;text-shadow:0 2px 16px rgba(230,81,0,.4);display:none}
-.streak-pop.show{display:block;animation:streakpop .95s cubic-bezier(.175,.885,.32,1.275) forwards}
-@keyframes streakpop{0%{opacity:0;transform:translate(-50%,-70%) scale(.3)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.25)}65%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-40%) scale(.85)}}
-.tp-cn{background:#e8f5e9;color:#2e7d32}
-
-/* ── RANK DISPLAY (hasil) ── */
-.rank-name-lbl{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--g2);display:block;margin-bottom:4px}
-.ach-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
-.ach-chip{display:inline-block;background:var(--g1);color:var(--am);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px}
-
-/* ── CONNECTING THE DOTS ── */
-.conn-hint{font-size:12.5px;color:var(--muted);margin-bottom:.75rem;padding:8px 12px;background:#f8fdf9;border:1.5px solid var(--gp);border-radius:10px;line-height:1.5}
-.conn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem}
-@media(max-width:480px){.conn-grid{grid-template-columns:1fr;gap:8px}}
-.conn-col-lbl{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.conn-item{background:var(--wh);border:2px solid #dde8e3;border-radius:var(--r);padding:10px 13px;cursor:pointer;text-align:left;transition:all .18s;font-family:inherit;font-size:12.5px;font-weight:500;color:var(--txt);line-height:1.45;width:100%;display:block;margin-bottom:7px;position:relative}
-.conn-item:last-child{margin-bottom:0}
-.conn-item:hover:not([disabled]){border-color:var(--g3);background:#f0faf5;transform:translateY(-1px)}
-.conn-item.active{border-color:var(--g1)!important;background:#eaf7ee!important;box-shadow:0 0 0 3px rgba(26,58,42,.18)!important;transform:none!important}
-.conn-item.c0{border-color:#1565c0!important;background:#e3f2fd!important;color:#0d47a1!important}
-.conn-item.c1{border-color:#e65100!important;background:#fff3e0!important;color:#bf360c!important}
-.conn-item.c2{border-color:#6a0dad!important;background:#f3e5f5!important;color:#4a0080!important}
-.conn-item.c3{border-color:#2e7d32!important;background:#e8f5e9!important;color:#1b5e20!important}
-.conn-item.c4{border-color:#c62828!important;background:#ffebee!important;color:#b71c1c!important}
-.conn-item.c5{border-color:#00796b!important;background:#e0f2f1!important;color:#004d40!important}
-.conn-item.ok-conn{border-color:var(--g2)!important;background:#eaf7ee!important;color:var(--g1)!important}
-.conn-item.ng-conn{border-color:var(--co)!important;background:#fdf0ee!important;color:#a03020!important}
 </style>
 </head>
 <body>
@@ -392,26 +367,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
     </div>
   </div>
   <div class="credit">Modul Penguatan Karakter & Soft Skill · Kemendikbud × LPDP</div>
-  <div class="dev-footer">
-    <span class="dev-name">Dikembangkan oleh <strong>Oryza Sativa N</strong></span>
-    <a class="dev-ig" href="https://instagram.com/ryzaraccman" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ig-g" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#f09433"/>
-            <stop offset="25%" stop-color="#e6683c"/>
-            <stop offset="50%" stop-color="#dc2743"/>
-            <stop offset="75%" stop-color="#cc2366"/>
-            <stop offset="100%" stop-color="#bc1888"/>
-          </linearGradient>
-        </defs>
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-g)"/>
-        <circle cx="12" cy="12" r="4.8" fill="none" stroke="white" stroke-width="1.8"/>
-        <circle cx="17.3" cy="6.7" r="1.2" fill="white"/>
-      </svg>
-      @ryzaraccman
-    </a>
-  </div>
 </div>
 </div>
 
@@ -448,6 +403,21 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <div class="h-trophy" id="h-trophy">🏆</div>
   <div class="h-score" id="h-score"></div>
   <div class="h-pct" id="h-pct"></div>
+
+  <!-- ╔══════════════════════════════════════════════╗
+       ║  GAMBAR HASIL SOLO — GANTI URL DI BAWAH INI ║
+       ║  Ada 4 gambar sesuai kategori skor:         ║
+       ║  • img-hasil-sempurna  → skor ≥ 90%         ║
+       ║  • img-hasil-hebat     → skor 70–89%        ║
+       ║  • img-hasil-cukup     → skor 50–69%        ║
+       ║  • img-hasil-semangat  → skor < 50%         ║
+       ║  Ganti nilai src="..." dengan URL gambarmu  ║
+       ╚══════════════════════════════════════════════╝ -->
+  <div class="result-img-wrap" id="h-img-wrap">
+    <img id="h-result-img" class="result-img" src="" alt="hasil" style="display:none">
+    <div class="result-img-caption" id="h-img-caption"></div>
+  </div>
+
   <div class="h-msg" id="h-msg"></div>
   <div class="h-grid" id="h-grid"></div>
   <div class="h-btns">
@@ -535,6 +505,19 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div class="vs-winner-badge" id="vf-trophy">🏆</div>
       <div class="vs-winner-name" id="vf-winner"></div>
       <div class="vs-winner-sub" id="vf-sub"></div>
+
+      <!-- ╔═════════════════════════════════════════════╗
+           ║  GAMBAR HASIL VERSUS — GANTI URL DI BAWAH  ║
+           ║  Ada 3 gambar sesuai kondisi:              ║
+           ║  • img-vs-menang  → ada pemenang           ║
+           ║  • img-vs-seri    → skor sama              ║
+           ║  Ganti nilai src="..." dengan URL gambarmu ║
+           ╚═════════════════════════════════════════════╝ -->
+      <div class="vs-result-img-wrap" id="vf-img-wrap">
+        <img id="vf-result-img" class="vs-result-img" src="" alt="hasil versus" style="display:none">
+        <div class="vs-result-img-caption" id="vf-img-caption"></div>
+      </div>
+
       <div class="vs-final-scores" id="vf-scores"></div>
       <div class="vs-btns">
         <button class="btn-vs-again" onclick="vsAgain()">Main Lagi ⚔️</button>
@@ -549,7 +532,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 </div>
 </div>
 
-<div id="streak-pop" class="streak-pop"></div>
 <script>
 /* ══════════════════════════════════════════════════
    ASSET DEFINITIONS
@@ -831,28 +813,6 @@ const VHARD = [
    opsiLabel:{'tunggal':'Satu potensi = satu aset saja','ganda':'Potensi bisa punya dimensi aset ganda','tergantung':'Bergantung konteks sekolah','tidak-ada':'Keduanya tidak tepat sepenuhnya'},
    pen:'🧠 Jawaban terbaik: <strong>Potensi bisa punya dimensi aset ganda</strong>. Contoh: guru TIK yang membuat konten = manusia + digital. Tablet berisi konten pembelajaran = fisik + digital. Fleksibilitas kategorisasi justru memperkaya pemetaan aset!',
    ff:'💡 ABCD (Asset-Based Community Development) menekankan bahwa pemetaan terbaik menangkap seluruh dimensi potensi — termasuk dimensi digital yang sering terlewat di sekolah 3T!'},
-
-  {type:'connecting',lok:'SDN Lintas Budaya, Sulawesi Tengah',
-   ske:'Kepala sekolah baru melakukan pemetaan aset pertamanya. Bantu ia menghubungkan setiap potensi yang ditemukan dengan jenis asetnya yang tepat!',
-   soal:'Hubungkan setiap potensi sekolah dengan jenis aset yang paling tepat!',
-   pairs:[
-     {id:'p1',leftLabel:'👩‍🏫 Guru senior fasih 3 bahasa lokal dengan 15 tahun pengalaman mengajar',rightKey:'manusia'},
-     {id:'p2',leftLabel:'🏗️ Lahan kosong 300m² di belakang sekolah yang belum dimanfaatkan',rightKey:'fisik'},
-     {id:'p3',leftLabel:'📝 Kesepakatan kerjasama resmi antara sekolah dan NGO literasi daerah',rightKey:'institusional'},
-     {id:'p4',leftLabel:'🤝 Gotong royong rutin warga yang aktif membantu perbaikan fasilitas sekolah',rightKey:'sosial'},
-   ],
-   pen:'🔗 Koneksi sempurna! <strong>Manusia</strong> = individu+kompetensi (guru senior). <strong>Fisik</strong> = benda/ruang yang dapat dimanfaatkan (lahan). <strong>Institusional</strong> = kesepakatan formal antar-lembaga. <strong>Sosial</strong> = kepercayaan & partisipasi aktif komunitas.'},
-
-  {type:'connecting',lok:'SDN Model Terpencil, Kalimantan Tengah',
-   ske:'Alumni Pejuang Digital mendampingi kepala sekolah memetakan aset yang mendukung program unggulan sekolah. Bantu mereka menghubungkan setiap elemen dengan asetnya!',
-   soal:'Hubungkan setiap elemen program sekolah dengan jenis asetnya!',
-   pairs:[
-     {id:'p1',leftLabel:'💰 Dana dari hasil penjualan kebun sekolah ke pasar lokal setiap panen',rightKey:'ekonomi'},
-     {id:'p2',leftLabel:'📱 Tablet berisi konten offline Kemdikbud yang aktif digunakan murid',rightKey:'digital'},
-     {id:'p3',leftLabel:'🎭 Nilai gotong royong adat Dayak yang diintegrasikan ke program kelas',rightKey:'budaya'},
-     {id:'p4',leftLabel:'📋 MoU resmi dengan BUMN setempat untuk program magang siswa tahunan',rightKey:'institusional'},
-   ],
-   pen:'🔗 Luar biasa! <strong>Ekonomi</strong> = sumber daya finansial sekolah. <strong>Digital</strong> = perangkat+konten digital aktif. <strong>Budaya</strong> = nilai/tradisi lokal yang hidup dalam komunitas. <strong>Institusional</strong> = perjanjian formal antar-lembaga yang berkelanjutan.'},
 ];
 
 /* ══════════════════════════════════════════════════
@@ -881,9 +841,7 @@ const VS_BANK = [
    QUIZ STATE
 ══════════════════════════════════════════════════ */
 let CUR_LEVEL='', CUR_BANK=[], Q_IDX=0, SCORE=0, ANSWERED=false, HASIL=[];
-let STREAK=0, MAX_STREAK=0, TOTAL_POIN=0, BONUS_EARNED=0;
 let DRAG_ITEM=null, TOUCH_ITEM=null, TOUCH_CLONE=null;
-let CONN_LEFT_SEL=null, CONN_PAIRS={}, CONN_RIGHT_TAKEN={};
 
 /* ══════════════════════════════════════════════════
    SCREEN MANAGEMENT
@@ -901,7 +859,7 @@ function goHome(){
 function startQuiz(level){
   CUR_LEVEL=level;
   CUR_BANK = level==='moderate'?[...MODERATE]:level==='hard'?[...HARD]:[...VHARD];
-  Q_IDX=0; SCORE=0; ANSWERED=false; HASIL=[]; STREAK=0; MAX_STREAK=0; TOTAL_POIN=0; BONUS_EARNED=0;
+  Q_IDX=0; SCORE=0; ANSWERED=false; HASIL=[];
   const sb=document.getElementById('sbadge');
   sb.className='sbadge '+level;
   show('quiz');
@@ -924,18 +882,17 @@ function renderProgBar(){
   }).join('');
   document.getElementById('prog-segs').innerHTML=segs;
   document.getElementById('prog-label').textContent=`Soal ${Q_IDX+1} dari ${n}`;
-  document.getElementById('prog-poin').textContent=`✨ ${TOTAL_POIN} poin`;
+  document.getElementById('prog-poin').textContent=`🎯 ${SCORE} benar`;
 
-  // Streak indicator
+  // Streak
   const streak=document.getElementById('prog-streak');
-  if(STREAK>=4){
-    streak.innerHTML=`🔥 Streak <strong>${STREAK}x</strong> COMBO! Bonus <strong>+10 poin</strong> per soal!`;
+  let consecutive=0;
+  for(let i=HASIL.length-1;i>=0;i--){if(HASIL[i])consecutive++;else break;}
+  if(consecutive>=3){
+    streak.textContent=`🔥 Streak ${consecutive} jawaban benar berturut-turut!`;
     streak.className='prog-streak fire';
-  } else if(STREAK>=2){
-    streak.innerHTML=`⚡ Streak <strong>${STREAK}x</strong>! Bonus <strong>+5 poin</strong> per soal!`;
-    streak.className='prog-streak fire';
-  } else if(STREAK===1){
-    streak.textContent='✨ 1 benar — teruskan untuk combo streak!';
+  } else if(consecutive===2){
+    streak.textContent=`⚡ 2 benar berturut! Pertahankan!`;
     streak.className='prog-streak';
   } else {
     streak.textContent='';
@@ -946,22 +903,21 @@ function renderProgBar(){
 function renderSoal(){
   const q=CUR_BANK[Q_IDX], n=CUR_BANK.length;
   document.getElementById('qnum').textContent=(Q_IDX+1)+' / '+n;
-  document.getElementById('sbadge').textContent=TOTAL_POIN+' poin';
+  document.getElementById('sbadge').textContent=SCORE+' poin';
   document.getElementById('fb-area').innerHTML='';
   document.getElementById('btn-nxt').classList.remove('show');
   renderProgBar();
 
   const lvLabel={moderate:'⭐ Moderate',hard:'⭐⭐ Hard',vhard:'⭐⭐⭐ Very Hard'}[CUR_LEVEL];
   const lvCls={moderate:'lp-mod',hard:'lp-hard',vhard:'lp-vhard'}[CUR_LEVEL];
-  const typLabel={pilihan:'🎯 Pilihan Ganda',dragdrop:'🖱️ Drag & Drop',benar_salah:'✔✘ Benar / Salah',connecting:'🔗 Connecting the Dots'}[q.type];
-  const tpCls={pilihan:'tp-pg',dragdrop:'tp-dd',benar_salah:'tp-bn',connecting:'tp-cn'}[q.type];
+  const typLabel={pilihan:'🎯 Pilihan Ganda',dragdrop:'🖱️ Drag & Drop',benar_salah:'✔✘ Benar / Salah'}[q.type];
+  const tpCls={pilihan:'tp-pg',dragdrop:'tp-dd',benar_salah:'tp-bn'}[q.type];
 
   const sken=`<div class="sken"><div class="sken-loc">📍 ${q.lok}</div><div class="sken-txt">${q.ske}</div></div>`;
 
   let body='';
   if(q.type==='pilihan') body=renderPilihan(q,false);
   else if(q.type==='dragdrop') body=renderDD(q);
-  else if(q.type==='connecting') body=renderConnecting(q);
   else body=renderBS(q);
 
   document.getElementById('qcard').innerHTML=
@@ -971,7 +927,6 @@ function renderSoal(){
     +body;
 
   if(q.type==='dragdrop') setupDD(q, false);
-  if(q.type==='connecting') setupConnecting();
 }
 
 /* ── PILIHAN GANDA ── */
@@ -980,12 +935,9 @@ function renderPilihan(q, isVs){
   const ids=shuffle(q.opsi);
   return '<div class="pgrid">'
     +ids.map(id=>{
-      const a=AD[id];
-      const lbl=q.opsiLabel?.[id]||(a?'Aset '+a.l:id);
-      const icon=a?a.i:'💡';
-      const desc=a?a.d:'';
+      const a=AD[id], lbl=q.opsiLabel?.[id]||('Aset '+a.l);
       return `<button class="pbtn" id="pb-${id}" onclick="pickAnswer('${id}')">
-        <span class="pi">${icon}</span><div class="pb"><span class="pn">${lbl}</span><span class="pd">${desc}</span></div>
+        <span class="pi">${a.i}</span><div class="pb"><span class="pn">${lbl}</span><span class="pd">${a.d}</span></div>
       </button>`;
     }).join('')
     +'</div>';
@@ -1004,8 +956,7 @@ function pickBS(val){
   ANSWERED=true;
   const q=CUR_BANK[Q_IDX];
   const benar=val===q.jwb;
-  if(benar){SCORE++;STREAK++;MAX_STREAK=Math.max(MAX_STREAK,STREAK);const b=calcBonus(STREAK);TOTAL_POIN+=10+b;BONUS_EARNED+=b;}
-  else{STREAK=0;}
+  if(benar) SCORE++;
   HASIL.push(benar);
   ['benar','salah'].forEach(v=>{
     const b=document.getElementById('yn-'+v);
@@ -1103,8 +1054,7 @@ function cekDD(){
     zone.classList.add(hasNg?'ng-z':'ok-z');
   });
   const allOk=ok===q.items.length;
-  if(allOk){SCORE++;STREAK++;MAX_STREAK=Math.max(MAX_STREAK,STREAK);const b=calcBonus(STREAK);TOTAL_POIN+=10+b;BONUS_EARNED+=b;}
-  else{STREAK=0;}
+  if(allOk) SCORE++;
   HASIL.push(allOk);
   document.getElementById('btn-sub').disabled=true;
   const extra=allOk?`🎊 Semua ${q.items.length} item diklasifikasi benar!`:`⚠️ ${ok}/${q.items.length} benar. Periksa item merah untuk belajar lebih lanjut.`;
@@ -1117,8 +1067,7 @@ function pickAnswer(id){
   ANSWERED=true;
   const q=CUR_BANK[Q_IDX];
   const benar=id===q.jwb;
-  if(benar){SCORE++;STREAK++;MAX_STREAK=Math.max(MAX_STREAK,STREAK);const b=calcBonus(STREAK);TOTAL_POIN+=10+b;BONUS_EARNED+=b;}
-  else{STREAK=0;}
+  if(benar) SCORE++;
   HASIL.push(benar);
   document.querySelectorAll('.pbtn').forEach(b=>{b.disabled=true;b.onclick=null;});
   const bOk=document.getElementById('pb-'+q.jwb);
@@ -1140,8 +1089,7 @@ function showFeedback(benar,pen,extra){
       <div class="fb-ttl">${ti}</div>
       <div class="fb-txt">${pen}${extra?'<br><br><em style="font-size:12.5px">'+extra+'</em>':''}</div>
     </div>`;
-  document.getElementById('sbadge').textContent=TOTAL_POIN+' poin';
-  if(STREAK>=2) showStreakPop(STREAK, calcBonus(STREAK));
+  document.getElementById('sbadge').textContent=SCORE+' poin';
   const nb=document.getElementById('btn-nxt');
   nb.textContent=Q_IDX===CUR_BANK.length-1?'Lihat Hasil Akhir 🏆':'Soal Berikutnya →';
   nb.classList.add('show');
@@ -1159,28 +1107,55 @@ function nextSoal(){
 function tampilHasil(){
   show('hasil');
   const n=CUR_BANK.length, pct=Math.round(SCORE/n*100);
-  let rankEm,rankName,rankTagline,msg;
-  if(pct>=95){rankEm='🌟';rankName='Mythical Glory';rankTagline='Rank tertinggi — kamu legenda sejati pola pikir aset!';msg='<strong>Sempurna!</strong> Kamu menguasai ketujuh jenis aset dengan sangat baik. Siap memimpin transformasi berbasis aset di lapangan!';}
-  else if(pct>=85){rankEm='🏆';rankName='Mythic';rankTagline='Hampir tak tertandingi — satu langkah lagi menuju puncak!';msg='<strong>Hebat sekali!</strong> Pemahamanmu solid. Perhatikan lagi perbedaan Sosial vs Institusional, dan Manusia vs Budaya — pasangan yang paling sering membingungkan.';}
-  else if(pct>=70){rankEm='💜';rankName='Legend';rankTagline='Pemahaman di atas rata-rata — terus naik rank!';msg='<strong>Bagus!</strong> Fondasi asetmu kuat. Fokus pada soal-soal ambigu antarkategori untuk naik ke level berikutnya.';}
-  else if(pct>=55){rankEm='💎';rankName='Epic';rankTagline='Kamu sudah merasakan level serius — pertahankan!';msg='<strong>Terus berkembang!</strong> Fondasi sudah ada. Ingat: Manusia=individu, Sosial=relasi, Fisik=benda/lahan, Institusional=MoU/program, Ekonomi=dana, Budaya=tradisi.';}
-  else if(pct>=40){rankEm='🥇';rankName='Grandmaster';rankTagline='Potensi besar terlihat — sedikit lagi bisa Epic!';msg='<strong>Lumayan!</strong> Kamu punya fondasi. Fokus memahami perbedaan antarkategori yang sering membingungkan.';}
-  else if(pct>=25){rankEm='⚔️';rankName='Master';rankTagline='Perjalanan menuju puncak baru dimulai!';msg='<strong>Jangan menyerah!</strong> Pola pikir berbasis aset butuh latihan. Coba lagi dari level Moderate, kemudian naik pelan-pelan!';}
-  else if(pct>=10){rankEm='🛡️';rankName='Elite';rankTagline='Masih banyak ruang untuk berkembang — ayo push rank!';msg='<strong>Jangan menyerah!</strong> Coba ulangi dan perhatikan penjelasan di setiap soal dengan seksama.';}
-  else{rankEm='⚙️';rankName='Warrior';rankTagline='Semua legenda pernah mulai dari sini!';msg='<strong>Jangan menyerah!</strong> Pola pikir berbasis aset butuh latihan. Coba lagi dari level Moderate, kemudian naik pelan-pelan!';}
+  let trophy,msg;
+  if(pct>=90){trophy='🏆';msg=`<strong>Sempurna!</strong> Kamu menguasai ketujuh jenis aset dengan sangat baik. Siap memimpin transformasi berbasis aset di lapangan!`;}
+  else if(pct>=70){trophy='🌟';msg=`<strong>Hebat!</strong> Pemahamanmu solid. Perhatikan lagi perbedaan Sosial vs Institusional, dan Manusia vs Budaya — pasangan yang paling sering membingungkan.`;}
+  else if(pct>=50){trophy='📚';msg=`<strong>Terus berkembang!</strong> Fondasi sudah ada. Ingat: Manusia=individu, Sosial=relasi, Fisik=benda/lahan, Institusional=MoU/program, Ekonomi=dana, Budaya=tradisi.`;}
+  else{trophy='💪';msg=`<strong>Jangan menyerah!</strong> Pola pikir berbasis aset butuh latihan. Coba lagi dari level Moderate, kemudian naik pelan-pelan!`;}
 
-  const achs=[];
-  if(SCORE===n) achs.push('💯 Jawaban Sempurna');
-  if(MAX_STREAK>=5) achs.push(`🔥 Streak Master ${MAX_STREAK}x`);
-  else if(MAX_STREAK>=3) achs.push(`⚡ Streak ${MAX_STREAK}x Berturut`);
-  if(BONUS_EARNED>=20) achs.push(`✨ Bonus +${BONUS_EARNED} Poin`);
-  else if(BONUS_EARNED>0) achs.push(`✨ +${BONUS_EARNED} Bonus Streak`);
-
-  document.getElementById('h-trophy').textContent=rankEm;
-  document.getElementById('h-score').innerHTML=`<span class="rank-name-lbl">${rankName}</span>${TOTAL_POIN}`;
-  document.getElementById('h-pct').innerHTML=`<span style="font-weight:600;color:var(--am2)">${SCORE}/${n} benar · ${pct}%</span><br><small style="color:var(--muted)">${rankTagline}</small>`;
-  document.getElementById('h-msg').innerHTML=msg+(achs.length?`<div class="ach-row">${achs.map(a=>`<span class="ach-chip">${a}</span>`).join('')}</div>`:'');
+  document.getElementById('h-trophy').textContent=trophy;
+  document.getElementById('h-score').textContent=SCORE+'/'+n;
+  document.getElementById('h-pct').textContent=pct+'% soal dijawab benar';
+  document.getElementById('h-msg').innerHTML=msg;
   document.getElementById('h-grid').innerHTML=HASIL.map((b,i)=>`<div class="hdot ${b?'ok':'ng'}">${i+1}</div>`).join('');
+
+  /* ════════════════════════════════════════════════════════
+     PENGATURAN GAMBAR HASIL SOLO
+     Ganti nilai URL di setiap baris src: "..." di bawah ini
+     dengan link gambar yang kamu inginkan.
+
+     Ada 4 kondisi skor:
+       pct >= 90  → gambar "sempurna"    (misal: gif tepuk tangan, karakter juara)
+       pct >= 70  → gambar "hebat"       (misal: karakter acungkan jempol)
+       pct >= 50  → gambar "cukup"       (misal: karakter semangat)
+       pct <  50  → gambar "semangat"    (misal: karakter lucu jatuh / try again)
+  ════════════════════════════════════════════════════════ */
+  const GAMBAR_SOLO = {
+    sempurna: 'https://github.com/ironmen77/game_aset/blob/main/Perfek.png?raw=true',   // ← skor ≥ 90%
+    hebat:    'https://github.com/ironmen77/game_aset/blob/main/Hebat.png?raw=true',       // ← skor 70–89%
+    cukup:    'https://github.com/ironmen77/game_aset/blob/main/Cukup.png?raw=true',       // ← skor 50–69%
+    semangat: 'https://github.com/ironmen77/game_aset/blob/main/Semangqa.png?raw=true',    // ← skor < 50%
+  };
+  const CAPTION_SOLO = {
+    sempurna: '🏆 Luar biasa, juara!',
+    hebat:    '🌟 Keren banget!',
+    cukup:    '📚 Terus semangat!',
+    semangat: '💪 Ayo coba lagi!',
+  };
+  /* ════════════════════════════════════════════════════════ */
+
+  const key = pct>=90?'sempurna':pct>=70?'hebat':pct>=50?'cukup':'semangat';
+  const imgEl = document.getElementById('h-result-img');
+  const capEl = document.getElementById('h-img-caption');
+  const url = GAMBAR_SOLO[key];
+  if(url && !url.startsWith('GANTI')){
+    imgEl.src = url;
+    imgEl.style.display = 'block';
+    capEl.textContent = CAPTION_SOLO[key];
+  } else {
+    imgEl.style.display = 'none';
+    capEl.textContent = '';
+  }
 }
 
 /* ══════════════════════════════════════════════════
@@ -1432,137 +1407,44 @@ function vsEnd(){
       <div class="vs-fs-name">${VS_P2}</div>
       <div class="vs-fs-num">${VS_S2}</div>
     </div>`;
+
+  /* ════════════════════════════════════════════════════════
+     PENGATURAN GAMBAR HASIL VERSUS
+     Ganti nilai URL di setiap baris src: "..." di bawah ini
+     dengan link gambar yang kamu inginkan.
+
+     Ada 2 kondisi:
+       menang → ada satu pemenang  (misal: gif konfeti, karakter angkat piala)
+       seri   → skor sama rata     (misal: karakter saling peluk / high-five)
+  ════════════════════════════════════════════════════════ */
+  const GAMBAR_VS = {
+    menang: 'https://github.com/ironmen77/game_aset/blob/main/Perfek.png?raw=true',   // ← ada pemenang
+    seri:   'https://github.com/ironmen77/game_aset/blob/main/Semangqa.png?raw=true',     // ← skor seri
+  };
+  const CAPTION_VS = {
+    menang: '🏆 Selamat sang juara!',
+    seri:   '🤝 Sama kuat, sama hebat!',
+  };
+  /* ════════════════════════════════════════════════════════ */
+
+  const key = draw?'seri':'menang';
+  const imgEl = document.getElementById('vf-result-img');
+  const capEl = document.getElementById('vf-img-caption');
+  const url = GAMBAR_VS[key];
+  if(url && !url.startsWith('GANTI')){
+    imgEl.src = url;
+    imgEl.style.display = 'block';
+    capEl.textContent = CAPTION_VS[key];
+  } else {
+    imgEl.style.display = 'none';
+    capEl.textContent = '';
+  }
 }
 
 function vsAgain(){
   document.getElementById('vs-setup').style.display='flex';
   document.getElementById('vs-game').style.display='none';
   document.getElementById('vs-final').style.display='none';
-}
-
-/* ══════════════════════════════════════════════════
-   STREAK BONUS HELPERS
-══════════════════════════════════════════════════ */
-function calcBonus(streak){
-  if(streak>=4) return 10;
-  if(streak>=2) return 5;
-  return 0;
-}
-
-function showStreakPop(streak, bonus){
-  if(bonus===0) return;
-  const el=document.getElementById('streak-pop');
-  if(!el) return;
-  el.textContent= streak>=4 ? `🔥 ${streak}x COMBO! +${bonus}` : `⚡ ${streak}x Streak! +${bonus}`;
-  el.classList.remove('show');
-  void el.offsetWidth;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 950);
-}
-
-/* ══════════════════════════════════════════════════
-   CONNECTING THE DOTS
-══════════════════════════════════════════════════ */
-const CONN_COLORS=['c0','c1','c2','c3','c4','c5'];
-
-function renderConnecting(q){
-  const shuffledRights=[...q.pairs].map(p=>p.rightKey).sort(()=>Math.random()-.5);
-  const leftHTML=q.pairs.map(p=>
-    `<button class="conn-item left-item" id="cl-${p.id}" data-id="${p.id}" onclick="connClickLeft('${p.id}')">${p.leftLabel}</button>`
-  ).join('');
-  const rightHTML=shuffledRights.map(key=>
-    `<button class="conn-item right-item" id="cr-${key}" data-key="${key}" onclick="connClickRight('${key}')">
-      ${AD[key].i} <strong>Aset ${AD[key].l}</strong><br>
-      <span style="font-size:11px;font-weight:400;opacity:.8">${AD[key].d}</span>
-    </button>`
-  ).join('');
-  return `<div class="conn-hint">👆 Klik <strong>Potensi</strong> di kiri → lalu klik <strong>Jenis Aset</strong> di kanan. Hubungkan semua pasangan lalu klik Cek!</div>
-    <div class="conn-grid">
-      <div><div class="conn-col-lbl">📋 Potensi Sekolah</div>${leftHTML}</div>
-      <div><div class="conn-col-lbl">🗂️ Jenis Aset</div>${rightHTML}</div>
-    </div>
-    <button class="btn-sub" id="btn-sub-conn" onclick="cekConnecting()" disabled>Cek Koneksi ✓</button>`;
-}
-
-function setupConnecting(){
-  CONN_LEFT_SEL=null; CONN_PAIRS={}; CONN_RIGHT_TAKEN={};
-}
-
-function connClickLeft(id){
-  if(ANSWERED) return;
-  if(CONN_LEFT_SEL===id){
-    document.getElementById('cl-'+id)?.classList.remove('active');
-    CONN_LEFT_SEL=null;
-    return;
-  }
-  if(CONN_LEFT_SEL) document.getElementById('cl-'+CONN_LEFT_SEL)?.classList.remove('active');
-  CONN_LEFT_SEL=id;
-  document.getElementById('cl-'+id)?.classList.add('active');
-}
-
-function connClickRight(key){
-  if(ANSWERED||!CONN_LEFT_SEL) return;
-  const leftId=CONN_LEFT_SEL;
-
-  // Free previously taken right by this left
-  if(CONN_PAIRS[leftId]){
-    const oldRight=CONN_PAIRS[leftId].rightKey;
-    delete CONN_RIGHT_TAKEN[oldRight];
-    const oldRightEl=document.getElementById('cr-'+oldRight);
-    if(oldRightEl) oldRightEl.className='conn-item right-item';
-  }
-
-  // Free old left that owned this right
-  if(CONN_RIGHT_TAKEN[key]){
-    const oldLeft=CONN_RIGHT_TAKEN[key];
-    const oldColor=CONN_PAIRS[oldLeft]?.color||'';
-    delete CONN_PAIRS[oldLeft];
-    const oldLeftEl=document.getElementById('cl-'+oldLeft);
-    if(oldLeftEl) oldLeftEl.className='conn-item left-item';
-  }
-
-  // Find unused color
-  const used=new Set(Object.values(CONN_PAIRS).map(p=>p.color));
-  const color=CONN_COLORS.find(c=>!used.has(c))||CONN_COLORS[0];
-
-  CONN_PAIRS[leftId]={rightKey:key,color};
-  CONN_RIGHT_TAKEN[key]=leftId;
-
-  const leftEl=document.getElementById('cl-'+leftId);
-  const rightEl=document.getElementById('cr-'+key);
-  if(leftEl){ leftEl.className=`conn-item left-item ${color}`; leftEl.classList.remove('active'); }
-  if(rightEl){ rightEl.className=`conn-item right-item ${color}`; }
-
-  CONN_LEFT_SEL=null;
-
-  const q=CUR_BANK[Q_IDX];
-  const subBtn=document.getElementById('btn-sub-conn');
-  if(subBtn) subBtn.disabled=Object.keys(CONN_PAIRS).length<q.pairs.length;
-}
-
-function cekConnecting(){
-  if(ANSWERED) return;
-  ANSWERED=true;
-  const q=CUR_BANK[Q_IDX];
-  let ok=0;
-  q.pairs.forEach(p=>{
-    const paired=CONN_PAIRS[p.id];
-    const benar=paired&&paired.rightKey===p.rightKey;
-    if(benar) ok++;
-    const leftEl=document.getElementById('cl-'+p.id);
-    const rightEl=document.getElementById('cr-'+p.rightKey);
-    if(leftEl) leftEl.classList.add(benar?'ok-conn':'ng-conn');
-    if(rightEl) rightEl.classList.add(benar?'ok-conn':'ng-conn');
-  });
-  document.querySelectorAll('.conn-item').forEach(el=>{el.disabled=true;el.onclick=null;});
-  const subBtn=document.getElementById('btn-sub-conn');
-  if(subBtn) subBtn.disabled=true;
-  const allOk=ok===q.pairs.length;
-  if(allOk){SCORE++;STREAK++;MAX_STREAK=Math.max(MAX_STREAK,STREAK);const b=calcBonus(STREAK);TOTAL_POIN+=10+b;BONUS_EARNED+=b;}
-  else{STREAK=0;}
-  HASIL.push(allOk);
-  const extra=allOk?`🔗 Semua ${q.pairs.length} koneksi benar!`:`⚠️ ${ok}/${q.pairs.length} koneksi benar — periksa item merah untuk belajar lebih lanjut.`;
-  showFeedback(allOk,q.pen,extra);
 }
 </script>
 </body>
